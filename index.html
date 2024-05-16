@@ -5,9 +5,11 @@
   <title>Audio Session</title>
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
-  <meta content="Bikeshed version 6edc88947, updated Thu Aug 17 11:18:09 2023 -0700" name="generator">
+  <meta content="Bikeshed version d765c696b, updated Fri Mar 8 15:58:52 2024 -0800" name="generator">
   <link href="https://w3c.github.io/audio-session/" rel="canonical">
-  <meta content="73aab448a8821f77054c809ec68ebaf445552670" name="document-revision">
+  <meta content="10c81d3a835e358d4ed390c2906ba098e320fae2" name="revision">
+  <meta content="dark light" name="color-scheme">
+  <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -79,7 +81,6 @@ pre .property::before, pre .property::after {
 }
 </style>
 <style>/* Boilerplate: style-colors */
-
 /* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
 :root {
     color-scheme: light dark;
@@ -333,11 +334,15 @@ figcaption:not(.no-marker)::before {
 :root {
     --dfnpanel-bg: #ddd;
     --dfnpanel-text: var(--text);
+    --dfnpanel-target-bg: #ffc;
+    --dfnpanel-target-outline: orange;
 }
 @media (prefers-color-scheme: dark) {
     :root {
         --dfnpanel-bg: #222;
         --dfnpanel-text: var(--text);
+        --dfnpanel-target-bg: #333;
+        --dfnpanel-target-outline: silver;
     }
 }
 .dfn-panel {
@@ -360,11 +365,13 @@ figcaption:not(.no-marker)::before {
 .dfn-panel > b { display: block; }
 .dfn-panel a { color: var(--dfnpanel-text); }
 .dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+.dfn-panel a:focus {
+    outline: 5px auto Highlight;
+    outline: 5px auto -webkit-focus-ring-color;
+}
 .dfn-panel > b + b { margin-top: 0.25em; }
 .dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
 .dfn-panel li a {
-    white-space: pre;
-    display: inline-block;
     max-width: calc(300px - 1.5em - 1em);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -373,67 +380,84 @@ figcaption:not(.no-marker)::before {
 .dfn-panel.activated {
     display: inline-block;
     position: fixed;
-    left: .5em;
+    left: 8px;
     bottom: 2em;
     margin: 0 auto;
     max-width: calc(100vw - 1.5em - .4em - .5em);
     max-height: 30vh;
+    transition: left 1s ease-out, bottom 1s ease-out;
 }
 
-.dfn-paneled[role="button"] { cursor: pointer; }
+.dfn-panel .link-item:hover {
+    text-decoration: underline;
+}
+.dfn-panel .link-item .copy-icon {
+    opacity: 0;
+}
+.dfn-panel .link-item:hover .copy-icon,
+.dfn-panel .link-item .copy-icon:focus {
+    opacity: 1;
+}
+
+.dfn-panel .copy-icon {
+    display: inline-block;
+    margin-right: 0.5em;
+    width: 0.85em;
+    height: 1em;
+    border-radius: 3px;
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+.dfn-panel .copy-icon .icon {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.dfn-panel .copy-icon .icon::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    background-color: #ccc;
+    opacity: 0.25;
+    transform: translate(3px, -3px);
+}
+
+.dfn-panel .copy-icon:active .icon::before {
+    opacity: 1;
+}
+
+.dfn-paneled[role="button"] { cursor: help; }
+
+.highlighted {
+    animation: target-fade 3s;
+}
+
+@keyframes target-fade {
+    from {
+        background-color: var(--dfnpanel-target-bg);
+        outline: 5px solid var(--dfnpanel-target-outline);
+    }
+    to {
+        color: var(--a-normal-text);
+        background-color: transparent;
+        outline: transparent;
+    }
+}
 </style>
-<style>/* Boilerplate: style-dfn-panel */
-:root {
-    --dfnpanel-bg: #ddd;
-    --dfnpanel-text: var(--text);
+<style>/* Boilerplate: style-idl-highlighting */
+pre.idl.highlight {
+    background: var(--borderedblock-bg, var(--def-bg));
 }
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-.dfn-panel {
-    position: absolute;
-    z-index: 35;
-    width: 20em;
-    width: 300px;
-    height: auto;
-    max-height: 500px;
-    overflow: auto;
-    padding: 0.5em 0.75em;
-    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
-    background: var(--dfnpanel-bg);
-    color: var(--dfnpanel-text);
-    border: outset 0.2em;
-    white-space: normal; /* in case it's moved into a pre */
-}
-.dfn-panel:not(.on) { display: none; }
-.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
-.dfn-panel > b { display: block; }
-.dfn-panel a { color: var(--dfnpanel-text); }
-.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
-.dfn-panel > b + b { margin-top: 0.25em; }
-.dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
-.dfn-panel li a {
-    white-space: pre;
-    display: inline-block;
-    max-width: calc(300px - 1.5em - 1em);
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.dfn-panel.activated {
-    display: inline-block;
-    position: fixed;
-    left: .5em;
-    bottom: 2em;
-    margin: 0 auto;
-    max-width: calc(100vw - 1.5em - .4em - .5em);
-    max-height: 30vh;
-}
-
-.dfn-paneled[role="button"] { cursor: pointer; }
 </style>
 <style>/* Boilerplate: style-issues */
 a[href].issue-return {
@@ -454,8 +478,40 @@ a[href].issue-return {
     margin-bottom: 0;
 }
 </style>
-<style>/* Boilerplate: style-selflinks */
+<style>/* Boilerplate: style-ref-hints */
+:root {
+    --ref-hint-bg: #ddd;
+    --ref-hint-text: var(--text);
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --ref-hint-bg: #222;
+        --ref-hint-text: var(--text);
+    }
+}
 
+.ref-hint {
+    display: inline-block;
+    position: absolute;
+    z-index: 35;
+    width: 20em;
+    width: 300px;
+    height: auto;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0.5em 0.5em;
+    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+    background: var(--ref-hint-bg);
+    color: var(--ref-hint-text);
+    border: outset 0.2em;
+    white-space: normal; /* in case it's moved into a pre */
+}
+
+.ref-hint * { margin: 0; padding: 0; text-indent: 0; }
+
+.ref-hint ul { padding: 0 0 0 1em; list-style: none; }
+</style>
+<style>/* Boilerplate: style-selflinks */
 :root {
     --selflink-text: white;
     --selflink-bg: gray;
@@ -515,14 +571,6 @@ a.self-link::before            { content: "¶"; }
 dfn > a.self-link::before      { content: "#"; }
 </style>
 <style>/* Boilerplate: style-syntax-highlighting */
-
-            pre.idl.highlight {
-                background: var(--borderedblock-bg, var(--def-bg));
-            }
-            
-</style>
-<style>/* Boilerplate: style-syntax-highlighting */
-
 code.highlight { padding: .1em; border-radius: .3em; }
 pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
 
@@ -579,7 +627,6 @@ c-[vc] { color: #0077aa } /* Name.Variable.Class */
 c-[vg] { color: #0077aa } /* Name.Variable.Global */
 c-[vi] { color: #0077aa } /* Name.Variable.Instance */
 c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
-
 
 @media (prefers-color-scheme: dark) {
     .highlight:not(.idl) { background: rgba(255, 255, 255, .05); }
@@ -648,7 +695,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Audio Session</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2023-08-30">30 August 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2024-05-16">16 May 2024</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -664,7 +711,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     </div>
    </details>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2023 <a href="https://www.w3.org/">World Wide Web Consortium</a>. <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup> <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-software" rel="license" title="W3C Software and Document License">permissive document license</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/policies/#copyright">Copyright</a> © 2024 <a href="https://www.w3.org/">World Wide Web Consortium</a>. <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup> <a href="https://www.w3.org/policies/#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/policies/#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/copyright/software-license/" rel="license" title="W3C Software and Document License">permissive document license</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
@@ -681,7 +728,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   This document is intended to become a <abbr title="World Wide Web Consortium">W3C</abbr> Recommendation. </p>
    <p> Publication as an Editor’s Draft does not imply endorsement by <abbr title="World Wide Web Consortium">W3C</abbr> and its Members. </p>
    <p> This document was produced by a group operating under the <a class="css" data-link-type="property" href="https://www.w3.org/Consortium/Patent-Policy/" id="sotd_patent">W3C Patent Policy</a>. <abbr title="World Wide Web Consortium">W3C</abbr> maintains a <a href="https://www.w3.org/groups/wg/media/ipr" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy/#sec-Disclosure">section 6 of the <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>. </p>
-   <p> This document is governed by the <a href="https://www.w3.org/2023/Process-20230612/" id="w3c_process_revision">12 June 2023 W3C Process Document</a>. </p>
+   <p> This document is governed by the <a href="https://www.w3.org/2023/Process-20231103/" id="w3c_process_revision">03 November 2023 W3C Process Document</a>. </p>
    <p></p>
   </div>
   <div data-fill-with="at-risk"></div>
@@ -779,10 +826,10 @@ This default audio session is represented as an <code class="idl"><a data-link-t
 
 [<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed" id="ref-for-Exposed①"><c- g>Exposed</c-></a>=<c- n>Window</c->]
 <c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="audiosession"><code><c- g>AudioSession</c-></code></dfn> : <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#eventtarget" id="ref-for-eventtarget"><c- n>EventTarget</c-></a> {
-  <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-audiosessiontype" id="ref-for-enumdef-audiosessiontype"><c- n>AudioSessionType</c-></a> <dfn class="idl-code" data-dfn-for="AudioSession" data-dfn-type="attribute" data-export data-type="AudioSessionType" id="dom-audiosession-type"><code><c- g>type</c-></code><a class="self-link" href="#dom-audiosession-type"></a></dfn>;
+  <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-audiosessiontype" id="ref-for-enumdef-audiosessiontype"><c- n>AudioSessionType</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="AudioSession" data-dfn-type="attribute" data-export data-type="AudioSessionType" id="dom-audiosession-type"><code><c- g>type</c-></code></dfn>;
 
-  <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-audiosessionstate" id="ref-for-enumdef-audiosessionstate"><c- n>AudioSessionState</c-></a> <dfn class="idl-code" data-dfn-for="AudioSession" data-dfn-type="attribute" data-export data-readonly data-type="AudioSessionState" id="dom-audiosession-state"><code><c- g>state</c-></code><a class="self-link" href="#dom-audiosession-state"></a></dfn>;
-  <c- b>attribute</c-> <a data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler"><c- n>EventHandler</c-></a> <dfn class="idl-code" data-dfn-for="AudioSession" data-dfn-type="attribute" data-export data-type="EventHandler" id="dom-audiosession-onstatechange"><code><c- g>onstatechange</c-></code><a class="self-link" href="#dom-audiosession-onstatechange"></a></dfn>;
+  <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-audiosessionstate" id="ref-for-enumdef-audiosessionstate"><c- n>AudioSessionState</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="AudioSession" data-dfn-type="attribute" data-export data-readonly data-type="AudioSessionState" id="dom-audiosession-state"><code><c- g>state</c-></code></dfn>;
+  <c- b>attribute</c-> <a data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler"><c- n>EventHandler</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="AudioSession" data-dfn-type="attribute" data-export data-type="EventHandler" id="dom-audiosession-onstatechange"><code><c- g>onstatechange</c-></code></dfn>;
 };
 </pre>
    <h2 class="heading settled" data-level="3" id="privacy"><span class="secno">3. </span><span class="content">Privacy considerations</span><a class="self-link" href="#privacy"></a></h2>
@@ -796,44 +843,48 @@ This default audio session is represented as an <code class="idl"><a data-link-t
 remoteVideo<c- p>.</c->srcObject <c- o>=</c-> remoteMediaStream<c- p>;</c->
 remoteVideo<c- p>.</c->play<c- p>();</c->
 <c- c1>// Start capturing</c->
-navigator<c- p>.</c->mediaDevices<c- p>.</c->getUserMedia<c- p>({</c-> audio<c- o>:</c-><c- kc>true</c-><c- p>,</c-> video<c- o>:</c-><c- kc>true</c-> <c- p>}).</c->then<c- p>(</c->stream <c- p>=></c-> <c- p>{</c->
+navigator<c- p>.</c->mediaDevices
+  <c- p>.</c->getUserMedia<c- p>({</c-> audio<c- o>:</c-> <c- kc>true</c-><c- p>,</c-> video<c- o>:</c-> <c- kc>true</c-> <c- p>})</c->
+  <c- p>.</c->then<c- p>((</c->stream<c- p>)</c-> <c- p>=></c-> <c- p>{</c->
     localVideo<c- p>.</c->srcObject <c- o>=</c-> stream<c- p>;</c->
-<c- p>});</c->
+  <c- p>});</c->
 </pre>
    <h3 class="heading settled" data-level="5.2" id="interrutpion-handling-example"><span class="secno">5.2. </span><span class="content">A site reacts upon interruption</span><a class="self-link" href="#interrutpion-handling-example"></a></h3>
-<pre class="language-javascript highlight">navigator<c- p>.</c->audioSession<c- p>.</c->type <c- o>=</c-> <c- t>'play-and-record'</c-><c- p>;</c->
+<pre class="language-javascript highlight">navigator<c- p>.</c->audioSession<c- p>.</c->type <c- o>=</c-> <c- u>"play-and-record"</c-><c- p>;</c->
 <c- c1>// From now on, volume might be set based on 'play-and-record'.</c->
 <c- p>...</c->
 <c- c1>// Start playing remote media</c->
 remoteVideo<c- p>.</c->srcObject <c- o>=</c-> remoteMediaStream<c- p>;</c->
 remoteVideo<c- p>.</c->play<c- p>();</c->
 <c- c1>// Start capturing</c->
-navigator<c- p>.</c->mediaDevices<c- p>.</c->getUserMedia<c- p>({</c-> audio<c- o>:</c-><c- kc>true</c-><c- p>,</c-> video<c- o>:</c-><c- kc>true</c-> <c- p>}).</c->then<c- p>(</c->stream <c- p>=></c-> <c- p>{</c->
+navigator<c- p>.</c->mediaDevices
+  <c- p>.</c->getUserMedia<c- p>({</c-> audio<c- o>:</c-> <c- kc>true</c-><c- p>,</c-> video<c- o>:</c-> <c- kc>true</c-> <c- p>})</c->
+  <c- p>.</c->then<c- p>((</c->stream<c- p>)</c-> <c- p>=></c-> <c- p>{</c->
     localVideo<c- p>.</c->srcObject <c- o>=</c-> stream<c- p>;</c->
-<c- p>});</c->
-<c- a>let</c-> isInterrupted <c- o>=</c-> <c- kc>false</c-><c- p>;</c->
-navigator<c- p>.</c->audioSession<c- p>.</c->onstatechange <c- o>=</c-> <c- p>()</c-> <c- p>=></c-> <c- p>{</c->
-    <c- k>if</c-> <c- p>(</c->navigator<c- p>.</c->audioSession<c- p>.</c->state <c- o>===</c-> <c- t>'interrupted'</c-><c- p>)</c-> <c- p>{</c->
-        isInterrupted <c- o>=</c-> <c- kc>true</c-><c- p>;</c->
-        localVideo<c- p>.</c->pause<c- p>();</c->
-        remoteVideo<c- p>.</c->pause<c- p>();</c->
-        <c- c1>// Make it clear to the user that the call is interrupted.</c->
-        showInterruptedBanner<c- p>();</c->
-        localVideo<c- p>.</c->srcObject<c- p>.</c->getTracks<c- p>().</c->forEach<c- p>(</c->track <c- p>=></c-> track<c- p>.</c->enabled <c- o>=</c-> <c- kc>false</c-><c- p>);</c->
-        <c- k>return</c-><c- p>;</c->
+  <c- p>});</c->
+
+navigator<c- p>.</c->audioSession<c- p>.</c->onstatechange <c- o>=</c-> <c- k>async</c-> <c- p>()</c-> <c- p>=></c-> <c- p>{</c->
+  <c- k>if</c-> <c- p>(</c->navigator<c- p>.</c->audioSession<c- p>.</c->state <c- o>===</c-> <c- u>"interrupted"</c-><c- p>)</c-> <c- p>{</c->
+    localVideo<c- p>.</c->pause<c- p>();</c->
+    remoteVideo<c- p>.</c->pause<c- p>();</c->
+    <c- c1>// Make it clear to the user that the call is interrupted.</c->
+    showInterruptedBanner<c- p>();</c->
+    <c- k>for</c-> <c- p>(</c-><c- a>const</c-> track <c- k>of</c-> localVideo<c- p>.</c->srcObject<c- p>.</c->getTracks<c- p>())</c-> <c- p>{</c->
+      track<c- p>.</c->enabled <c- o>=</c-> <c- kc>false</c-><c- p>;</c->
     <c- p>}</c->
-    <c- k>if</c-> <c- p>(</c->isInterrupted<c- p>)</c-> <c- p>{</c->
-        isInterrupted <c- o>=</c-> <c- kc>false</c-><c- p>;</c->
-        <c- c1>// Let user decide when to restart the call.</c->
-        showOptionalRestartBanner<c- p>().</c->then<c- p>((</c->result<c- p>)</c-> <c- p>=></c-> <c- p>{</c->
-            <c- k>if</c-> <c- p>(</c-><c- o>!</c->result<c- p>)</c->
-                <c- k>return</c-><c- p>;</c->
-            localVideo<c- p>.</c->srcObject<c- p>.</c->getTracks<c- p>().</c->forEach<c- p>(</c->track <c- p>=></c-> track<c- p>.</c->enabled <c- o>=</c-> <c- kc>true</c-><c- p>);</c->
-            localVideo<c- p>.</c->play<c- p>();</c->
-            remoteVideo<c- p>.</c->play<c- p>();</c->
-        <c- p>});</c->
+  <c- p>}</c-> <c- k>else</c-> <c- p>{</c->
+    <c- c1>// Let user decide when to restart the call.</c->
+    <c- a>const</c-> shouldRestart <c- o>=</c-> <c- k>await</c-> showOptionalRestartBanner<c- p>();</c->
+    <c- k>if</c-> <c- p>(</c-><c- o>!</c->shouldRestart<c- p>)</c-> <c- p>{</c->
+      <c- k>return</c-><c- p>;</c->
     <c- p>}</c->
-<c- p>}</c->
+    <c- k>for</c-> <c- p>(</c-><c- a>const</c-> track <c- k>of</c-> localVideo<c- p>.</c->srcObject<c- p>.</c->getTracks<c- p>())</c-> <c- p>{</c->
+      track<c- p>.</c->enabled <c- o>=</c-> <c- kc>true</c-><c- p>;</c->
+    <c- p>}</c->
+    localVideo<c- p>.</c->play<c- p>();</c->
+    remoteVideo<c- p>.</c->play<c- p>();</c->
+  <c- p>}</c->
+<c- p>};</c->
 </pre>
    <h2 class="heading settled" data-level="6" id="acknowledgements"><span class="secno">6. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
    <p>TODO</p>
@@ -881,7 +932,7 @@ navigator<c- p>.</c->audioSession<c- p>.</c->onstatechange <c- o>=</c-> <c- p>()
     Implementers are encouraged to optimize. </p>
    </section>
   </div>
-<script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script>
+  <script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script>
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
@@ -964,333 +1015,8 @@ navigator<c- p>.</c->audioSession<c- p>.</c->onstatechange <c- o>=</c-> <c- p>()
 };
 
 </pre>
-<script>/* Boilerplate: script-dfn-panel */
-"use strict";
-{
-    const dfnsJson = window.dfnsJson || {};
-
-    function genDfnPanel({dfnID, url, dfnText, refSections, external}) {
-        return mk.aside({
-            class: "dfn-panel",
-            id: `infopanel-for-${dfnID}`,
-            "data-for": dfnID,
-            "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
-            },
-            mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
-                `Info about the '${dfnText}' ${external?"external":""} reference.`),
-            mk.a({href:url}, url),
-            mk.b({}, "Referenced in:"),
-            mk.ul({},
-                ...refSections.map(section=>
-                    mk.li({},
-                        ...section.refs.map((ref, refI)=>
-                            [
-                                mk.a({
-                                    href: `#${ref.id}`
-                                    },
-                                    (refI == 0) ? section.title : `(${refI + 1})`
-                                ),
-                                " ",
-                            ]
-                        ),
-                    ),
-                ),
-            ),
-        );
-    }
-
-    function genAllDfnPanels() {
-        for(const panelData of Object.values(window.dfnpanelData)) {
-            const dfnID = panelData.dfnID;
-            const dfn = document.getElementById(dfnID);
-            if(!dfn) {
-                console.log(`Can't find dfn#${dfnID}.`, panelData);
-            } else {
-                const panel = genDfnPanel(panelData);
-                append(document.body, panel);
-                insertDfnPopupAction(dfn, panel)
-            }
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", ()=>{
-        genAllDfnPanels();
-
-        // Add popup behavior to all dfns to show the corresponding dfn-panel.
-        var dfns = queryAll('.dfn-paneled');
-        for(let dfn of dfns) { ; }
-
-        document.body.addEventListener("click", (e) => {
-            // If not handled already, just hide all dfn panels.
-            hideAllDfnPanels();
-        });
-    })
-
-
-    function hideAllDfnPanels() {
-        // Turn off any currently "on" or "activated" panels.
-        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>hideDfnPanel(el));
-    }
-
-    function showDfnPanel(dfnPanel, dfn) {
-        hideAllDfnPanels(); // Only display one at this time.
-        dfn.setAttribute("aria-expanded", "true");
-        dfnPanel.classList.add("on");
-        dfnPanel.style.left = "5px";
-        dfnPanel.style.top = "0px";
-        const panelRect = dfnPanel.getBoundingClientRect();
-        const panelWidth = panelRect.right - panelRect.left;
-        if (panelRect.right > document.body.scrollWidth) {
-            // Panel's overflowing the screen.
-            // Just drop it below the dfn and flip it rightward instead.
-            // This still wont' fix things if the screen is *really* wide,
-            // but fixing that's a lot harder without 'anchor()'.
-            dfnPanel.style.top = "1.5em";
-            dfnPanel.style.left = "auto";
-            dfnPanel.style.right = "0px";
-        }
-    }
-
-    function pinDfnPanel(dfnPanel) {
-        // Switch it to "activated" state, which pins it.
-        dfnPanel.classList.add("activated");
-        dfnPanel.style.left = null;
-        dfnPanel.style.top = null;
-    }
-
-    function hideDfnPanel(dfnPanel, dfn) {
-        if(!dfn) {
-            dfn = document.getElementById(dfnPanel.getAttribute("data-for"));
-        }
-        dfn.setAttribute("aria-expanded", "false")
-        dfnPanel.classList.remove("on");
-        dfnPanel.classList.remove("activated");
-    }
-
-    function toggleDfnPanel(dfnPanel, dfn) {
-        if(dfnPanel.classList.contains("on")) {
-            hideDfnPanel(dfnPanel, dfn);
-        } else {
-            showDfnPanel(dfnPanel, dfn);
-        }
-    }
-
-    function insertDfnPopupAction(dfn, dfnPanel) {
-        // Find dfn panel
-        const panelWrapper = document.createElement('span');
-        panelWrapper.appendChild(dfnPanel);
-        panelWrapper.style.position = "relative";
-        panelWrapper.style.height = "0px";
-        dfn.insertAdjacentElement("afterend", panelWrapper);
-        dfn.setAttribute('role', 'button');
-        dfn.setAttribute('aria-expanded', 'false')
-        dfn.tabIndex = 0;
-        dfn.classList.add('has-dfn-panel');
-        dfn.addEventListener('click', (event) => {
-            showDfnPanel(dfnPanel, dfn);
-            event.stopPropagation();
-        });
-        dfn.addEventListener('keypress', (event) => {
-            const kc = event.keyCode;
-            // 32->Space, 13->Enter
-            if(kc == 32 || kc == 13) {
-                toggleDfnPanel(dfnPanel, dfn);
-                event.stopPropagation();
-                event.preventDefault();
-            }
-        });
-
-        dfnPanel.addEventListener('click', (event) => {
-            if (event.target.nodeName == 'A') {
-                pinDfnPanel(dfnPanel);
-            }
-            event.stopPropagation();
-        });
-
-        dfnPanel.addEventListener('keydown', (event) => {
-            if(event.keyCode == 27) { // Escape key
-                hideDfnPanel(dfnPanel, dfn);
-                event.stopPropagation();
-                event.preventDefault();
-            }
-        })
-    }
-}
-</script>
-<script>/* Boilerplate: script-dfn-panel */
-"use strict";
-{
-    const dfnsJson = window.dfnsJson || {};
-
-    function genDfnPanel({dfnID, url, dfnText, refSections, external}) {
-        return mk.aside({
-            class: "dfn-panel",
-            id: `infopanel-for-${dfnID}`,
-            "data-for": dfnID,
-            "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
-            },
-            mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
-                `Info about the '${dfnText}' ${external?"external":""} reference.`),
-            mk.a({href:url}, url),
-            mk.b({}, "Referenced in:"),
-            mk.ul({},
-                ...refSections.map(section=>
-                    mk.li({},
-                        ...section.refs.map((ref, refI)=>
-                            [
-                                mk.a({
-                                    href: `#${ref.id}`
-                                    },
-                                    (refI == 0) ? section.title : `(${refI + 1})`
-                                ),
-                                " ",
-                            ]
-                        ),
-                    ),
-                ),
-            ),
-        );
-    }
-
-    function genAllDfnPanels() {
-        for(const panelData of Object.values(window.dfnpanelData)) {
-            const dfnID = panelData.dfnID;
-            const dfn = document.getElementById(dfnID);
-            if(!dfn) {
-                console.log(`Can't find dfn#${dfnID}.`, panelData);
-            } else {
-                const panel = genDfnPanel(panelData);
-                append(document.body, panel);
-                insertDfnPopupAction(dfn, panel)
-            }
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", ()=>{
-        genAllDfnPanels();
-
-        // Add popup behavior to all dfns to show the corresponding dfn-panel.
-        var dfns = queryAll('.dfn-paneled');
-        for(let dfn of dfns) { ; }
-
-        document.body.addEventListener("click", (e) => {
-            // If not handled already, just hide all dfn panels.
-            hideAllDfnPanels();
-        });
-    })
-
-
-    function hideAllDfnPanels() {
-        // Turn off any currently "on" or "activated" panels.
-        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>hideDfnPanel(el));
-    }
-
-    function showDfnPanel(dfnPanel, dfn) {
-        hideAllDfnPanels(); // Only display one at this time.
-        dfn.setAttribute("aria-expanded", "true");
-        dfnPanel.classList.add("on");
-        dfnPanel.style.left = "5px";
-        dfnPanel.style.top = "0px";
-        const panelRect = dfnPanel.getBoundingClientRect();
-        const panelWidth = panelRect.right - panelRect.left;
-        if (panelRect.right > document.body.scrollWidth) {
-            // Panel's overflowing the screen.
-            // Just drop it below the dfn and flip it rightward instead.
-            // This still wont' fix things if the screen is *really* wide,
-            // but fixing that's a lot harder without 'anchor()'.
-            dfnPanel.style.top = "1.5em";
-            dfnPanel.style.left = "auto";
-            dfnPanel.style.right = "0px";
-        }
-    }
-
-    function pinDfnPanel(dfnPanel) {
-        // Switch it to "activated" state, which pins it.
-        dfnPanel.classList.add("activated");
-        dfnPanel.style.left = null;
-        dfnPanel.style.top = null;
-    }
-
-    function hideDfnPanel(dfnPanel, dfn) {
-        if(!dfn) {
-            dfn = document.getElementById(dfnPanel.getAttribute("data-for"));
-        }
-        dfn.setAttribute("aria-expanded", "false")
-        dfnPanel.classList.remove("on");
-        dfnPanel.classList.remove("activated");
-    }
-
-    function toggleDfnPanel(dfnPanel, dfn) {
-        if(dfnPanel.classList.contains("on")) {
-            hideDfnPanel(dfnPanel, dfn);
-        } else {
-            showDfnPanel(dfnPanel, dfn);
-        }
-    }
-
-    function insertDfnPopupAction(dfn, dfnPanel) {
-        // Find dfn panel
-        const panelWrapper = document.createElement('span');
-        panelWrapper.appendChild(dfnPanel);
-        panelWrapper.style.position = "relative";
-        panelWrapper.style.height = "0px";
-        dfn.insertAdjacentElement("afterend", panelWrapper);
-        dfn.setAttribute('role', 'button');
-        dfn.setAttribute('aria-expanded', 'false')
-        dfn.tabIndex = 0;
-        dfn.classList.add('has-dfn-panel');
-        dfn.addEventListener('click', (event) => {
-            showDfnPanel(dfnPanel, dfn);
-            event.stopPropagation();
-        });
-        dfn.addEventListener('keypress', (event) => {
-            const kc = event.keyCode;
-            // 32->Space, 13->Enter
-            if(kc == 32 || kc == 13) {
-                toggleDfnPanel(dfnPanel, dfn);
-                event.stopPropagation();
-                event.preventDefault();
-            }
-        });
-
-        dfnPanel.addEventListener('click', (event) => {
-            if (event.target.nodeName == 'A') {
-                pinDfnPanel(dfnPanel);
-            }
-            event.stopPropagation();
-        });
-
-        dfnPanel.addEventListener('keydown', (event) => {
-            if(event.keyCode == 27) { // Escape key
-                hideDfnPanel(dfnPanel, dfn);
-                event.stopPropagation();
-                event.preventDefault();
-            }
-        })
-    }
-}
-</script>
-<script>/* Boilerplate: script-dfn-panel-json */
-window.dfnpanelData = {};
-window.dfnpanelData['2bc0cdf4'] = {"dfnID": "2bc0cdf4", "url": "https://dom.spec.whatwg.org/#eventtarget", "dfnText": "EventTarget", "refSections": [{"refs": [{"id": "ref-for-eventtarget"}], "title": "2. The AudioSession interface"}], "external": true};
-window.dfnpanelData['f0951476'] = {"dfnID": "f0951476", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler", "dfnText": "EventHandler", "refSections": [{"refs": [{"id": "ref-for-eventhandler"}], "title": "2. The AudioSession interface"}], "external": true};
-window.dfnpanelData['be0c27b2'] = {"dfnID": "be0c27b2", "url": "https://html.spec.whatwg.org/multipage/system-state.html#navigator", "dfnText": "Navigator", "refSections": [{"refs": [{"id": "ref-for-navigator"}], "title": "2. The AudioSession interface"}], "external": true};
-window.dfnpanelData['889e932f'] = {"dfnID": "889e932f", "url": "https://webidl.spec.whatwg.org/#Exposed", "dfnText": "Exposed", "refSections": [{"refs": [{"id": "ref-for-Exposed"}, {"id": "ref-for-Exposed\u2460"}], "title": "2. The AudioSession interface"}], "external": true};
-window.dfnpanelData['enumdef-audiosessionstate'] = {"dfnID": "enumdef-audiosessionstate", "url": "#enumdef-audiosessionstate", "dfnText": "AudioSessionState", "refSections": [{"refs": [{"id": "ref-for-enumdef-audiosessionstate"}], "title": "2. The AudioSession interface"}], "external": false};
-window.dfnpanelData['dom-audiosessionstate-inactive'] = {"dfnID": "dom-audiosessionstate-inactive", "url": "#dom-audiosessionstate-inactive", "dfnText": "\"inactive\"", "refSections": [{"refs": [{"id": "ref-for-dom-audiosessionstate-inactive"}], "title": "2. The AudioSession interface"}], "external": false};
-window.dfnpanelData['dom-audiosessionstate-active'] = {"dfnID": "dom-audiosessionstate-active", "url": "#dom-audiosessionstate-active", "dfnText": "\"active\"", "refSections": [{"refs": [{"id": "ref-for-dom-audiosessionstate-active"}], "title": "2. The AudioSession interface"}], "external": false};
-window.dfnpanelData['dom-audiosessionstate-interrupted'] = {"dfnID": "dom-audiosessionstate-interrupted", "url": "#dom-audiosessionstate-interrupted", "dfnText": "\"interrupted\"", "refSections": [{"refs": [{"id": "ref-for-dom-audiosessionstate-interrupted"}], "title": "2. The AudioSession interface"}], "external": false};
-window.dfnpanelData['enumdef-audiosessiontype'] = {"dfnID": "enumdef-audiosessiontype", "url": "#enumdef-audiosessiontype", "dfnText": "AudioSessionType", "refSections": [{"refs": [{"id": "ref-for-enumdef-audiosessiontype"}], "title": "2. The AudioSession interface"}], "external": false};
-window.dfnpanelData['dom-audiosessiontype-auto'] = {"dfnID": "dom-audiosessiontype-auto", "url": "#dom-audiosessiontype-auto", "dfnText": "\"auto\"", "refSections": [{"refs": [{"id": "ref-for-dom-audiosessiontype-auto"}], "title": "2. The AudioSession interface"}], "external": false};
-window.dfnpanelData['dom-audiosessiontype-playback'] = {"dfnID": "dom-audiosessiontype-playback", "url": "#dom-audiosessiontype-playback", "dfnText": "\"playback\"", "refSections": [{"refs": [{"id": "ref-for-dom-audiosessiontype-playback"}], "title": "2. The AudioSession interface"}], "external": false};
-window.dfnpanelData['dom-audiosessiontype-transient'] = {"dfnID": "dom-audiosessiontype-transient", "url": "#dom-audiosessiontype-transient", "dfnText": "\"transient\"", "refSections": [{"refs": [{"id": "ref-for-dom-audiosessiontype-transient"}], "title": "2. The AudioSession interface"}], "external": false};
-window.dfnpanelData['dom-audiosessiontype-transient-solo'] = {"dfnID": "dom-audiosessiontype-transient-solo", "url": "#dom-audiosessiontype-transient-solo", "dfnText": "\"transient-solo\"", "refSections": [{"refs": [{"id": "ref-for-dom-audiosessiontype-transient-solo"}], "title": "2. The AudioSession interface"}], "external": false};
-window.dfnpanelData['dom-audiosessiontype-ambient'] = {"dfnID": "dom-audiosessiontype-ambient", "url": "#dom-audiosessiontype-ambient", "dfnText": "\"ambient\"", "refSections": [{"refs": [{"id": "ref-for-dom-audiosessiontype-ambient"}], "title": "2. The AudioSession interface"}], "external": false};
-window.dfnpanelData['dom-audiosessiontype-play-and-record'] = {"dfnID": "dom-audiosessiontype-play-and-record", "url": "#dom-audiosessiontype-play-and-record", "dfnText": "\"play-and-record\"", "refSections": [{"refs": [{"id": "ref-for-dom-audiosessiontype-play-and-record"}], "title": "2. The AudioSession interface"}], "external": false};
-window.dfnpanelData['dom-navigator-audiosession'] = {"dfnID": "dom-navigator-audiosession", "url": "#dom-navigator-audiosession", "dfnText": "audioSession", "refSections": [{"refs": [{"id": "ref-for-dom-navigator-audiosession"}], "title": "2. The AudioSession interface"}], "external": false};
-window.dfnpanelData['audiosession'] = {"dfnID": "audiosession", "url": "#audiosession", "dfnText": "AudioSession", "refSections": [{"refs": [{"id": "ref-for-audiosession"}, {"id": "ref-for-audiosession\u2460"}, {"id": "ref-for-audiosession\u2461"}, {"id": "ref-for-audiosession\u2462"}, {"id": "ref-for-audiosession\u2463"}, {"id": "ref-for-audiosession\u2464"}, {"id": "ref-for-audiosession\u2465"}, {"id": "ref-for-audiosession\u2466"}], "title": "2. The AudioSession interface"}], "external": false};
-</script>
 <script>/* Boilerplate: script-dom-helper */
+"use strict";
 function query(sel) { return document.querySelector(sel); }
 
 function queryAll(sel) { return [...document.querySelectorAll(sel)]; }
@@ -1484,5 +1210,629 @@ function parseHTML(markup) {
 		el.innerHTML = markup;
 		return el.content;
 	}
+}</script>
+<script>/* Boilerplate: script-dfn-panel */
+"use strict";
+{
+let dfnPanelData = {
+"2bc0cdf4": {"dfnID":"2bc0cdf4","dfnText":"EventTarget","external":true,"refSections":[{"refs":[{"id":"ref-for-eventtarget"}],"title":"2. The AudioSession interface"}],"url":"https://dom.spec.whatwg.org/#eventtarget"},
+"889e932f": {"dfnID":"889e932f","dfnText":"Exposed","external":true,"refSections":[{"refs":[{"id":"ref-for-Exposed"},{"id":"ref-for-Exposed\u2460"}],"title":"2. The AudioSession interface"}],"url":"https://webidl.spec.whatwg.org/#Exposed"},
+"audiosession": {"dfnID":"audiosession","dfnText":"AudioSession","external":false,"refSections":[{"refs":[{"id":"ref-for-audiosession"},{"id":"ref-for-audiosession\u2460"},{"id":"ref-for-audiosession\u2461"},{"id":"ref-for-audiosession\u2462"},{"id":"ref-for-audiosession\u2463"},{"id":"ref-for-audiosession\u2464"},{"id":"ref-for-audiosession\u2465"},{"id":"ref-for-audiosession\u2466"}],"title":"2. The AudioSession interface"}],"url":"#audiosession"},
+"be0c27b2": {"dfnID":"be0c27b2","dfnText":"Navigator","external":true,"refSections":[{"refs":[{"id":"ref-for-navigator"}],"title":"2. The AudioSession interface"}],"url":"https://html.spec.whatwg.org/multipage/system-state.html#navigator"},
+"dom-audiosession-onstatechange": {"dfnID":"dom-audiosession-onstatechange","dfnText":"onstatechange","external":false,"refSections":[],"url":"#dom-audiosession-onstatechange"},
+"dom-audiosession-state": {"dfnID":"dom-audiosession-state","dfnText":"state","external":false,"refSections":[],"url":"#dom-audiosession-state"},
+"dom-audiosession-type": {"dfnID":"dom-audiosession-type","dfnText":"type","external":false,"refSections":[],"url":"#dom-audiosession-type"},
+"dom-audiosessionstate-active": {"dfnID":"dom-audiosessionstate-active","dfnText":"\"active\"","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessionstate-active"}],"title":"2. The AudioSession interface"}],"url":"#dom-audiosessionstate-active"},
+"dom-audiosessionstate-inactive": {"dfnID":"dom-audiosessionstate-inactive","dfnText":"\"inactive\"","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessionstate-inactive"}],"title":"2. The AudioSession interface"}],"url":"#dom-audiosessionstate-inactive"},
+"dom-audiosessionstate-interrupted": {"dfnID":"dom-audiosessionstate-interrupted","dfnText":"\"interrupted\"","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessionstate-interrupted"}],"title":"2. The AudioSession interface"}],"url":"#dom-audiosessionstate-interrupted"},
+"dom-audiosessiontype-ambient": {"dfnID":"dom-audiosessiontype-ambient","dfnText":"\"ambient\"","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-ambient"}],"title":"2. The AudioSession interface"}],"url":"#dom-audiosessiontype-ambient"},
+"dom-audiosessiontype-auto": {"dfnID":"dom-audiosessiontype-auto","dfnText":"\"auto\"","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-auto"}],"title":"2. The AudioSession interface"}],"url":"#dom-audiosessiontype-auto"},
+"dom-audiosessiontype-play-and-record": {"dfnID":"dom-audiosessiontype-play-and-record","dfnText":"\"play-and-record\"","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-play-and-record"}],"title":"2. The AudioSession interface"}],"url":"#dom-audiosessiontype-play-and-record"},
+"dom-audiosessiontype-playback": {"dfnID":"dom-audiosessiontype-playback","dfnText":"\"playback\"","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-playback"}],"title":"2. The AudioSession interface"}],"url":"#dom-audiosessiontype-playback"},
+"dom-audiosessiontype-transient": {"dfnID":"dom-audiosessiontype-transient","dfnText":"\"transient\"","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-transient"}],"title":"2. The AudioSession interface"}],"url":"#dom-audiosessiontype-transient"},
+"dom-audiosessiontype-transient-solo": {"dfnID":"dom-audiosessiontype-transient-solo","dfnText":"\"transient-solo\"","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-transient-solo"}],"title":"2. The AudioSession interface"}],"url":"#dom-audiosessiontype-transient-solo"},
+"dom-navigator-audiosession": {"dfnID":"dom-navigator-audiosession","dfnText":"audioSession","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-navigator-audiosession"}],"title":"2. The AudioSession interface"}],"url":"#dom-navigator-audiosession"},
+"enumdef-audiosessionstate": {"dfnID":"enumdef-audiosessionstate","dfnText":"AudioSessionState","external":false,"refSections":[{"refs":[{"id":"ref-for-enumdef-audiosessionstate"}],"title":"2. The AudioSession interface"}],"url":"#enumdef-audiosessionstate"},
+"enumdef-audiosessiontype": {"dfnID":"enumdef-audiosessiontype","dfnText":"AudioSessionType","external":false,"refSections":[{"refs":[{"id":"ref-for-enumdef-audiosessiontype"}],"title":"2. The AudioSession interface"}],"url":"#enumdef-audiosessiontype"},
+"f0951476": {"dfnID":"f0951476","dfnText":"EventHandler","external":true,"refSections":[{"refs":[{"id":"ref-for-eventhandler"}],"title":"2. The AudioSession interface"}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler"},
+};
+
+document.addEventListener("DOMContentLoaded", ()=>{
+    genAllDfnPanels();
+
+    document.body.addEventListener("click", (e) => {
+        // If not handled already, just hide all dfn panels.
+        hideAllDfnPanels();
+    });
+});
+
+window.addEventListener("resize", () => {
+    // Pin any visible dfn panel
+    queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>positionDfnPanel(el));
+});
+
+function genAllDfnPanels() {
+    for(const panelData of Object.values(dfnPanelData)) {
+        const dfnID = panelData.dfnID;
+        const dfn = document.getElementById(dfnID);
+        if(!dfn) {
+            console.log(`Can't find dfn#${dfnID}.`, panelData);
+            continue;
+        }
+        dfn.panelData = panelData;
+        insertDfnPopupAction(dfn);
+    }
+}
+
+function genDfnPanel(dfn, { dfnID, url, dfnText, refSections, external }) {
+    const dfnPanel = mk.aside({
+        class: "dfn-panel on",
+        id: `infopanel-for-${dfnID}`,
+        "data-for": dfnID,
+        "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
+        },
+        mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
+            `Info about the '${dfnText}' ${external?"external":""} reference.`),
+        mk.a({href:url, class:"dfn-link"}, url),
+        refSections.length == 0 ? [] :
+            mk.b({}, "Referenced in:"),
+            mk.ul({},
+                ...refSections.map(section=>
+                    mk.li({},
+                        ...section.refs.map((ref, refI)=>
+                            [
+                                mk.a({ href: `#${ref.id}` },
+                                    (refI == 0) ? section.title : `(${refI + 1})`
+                                ),
+                                " ",
+                            ]
+                        ),
+                    ),
+                ),
+            ),
+        genLinkingSyntaxes(dfn),
+    );
+
+    dfnPanel.addEventListener('click', (event) => {
+        if (event.target.nodeName == 'A') {
+            scrollToTargetAndHighlight(event);
+            pinDfnPanel(dfnPanel);
+        }
+        event.stopPropagation();
+        refocusOnTarget(event);
+    });
+    dfnPanel.addEventListener('keydown', (event) => {
+        if(event.keyCode == 27) { // Escape key
+            hideDfnPanel({dfnPanel});
+            event.stopPropagation();
+            event.preventDefault();
+        }
+    });
+
+    dfnPanel.dfn = dfn;
+    dfn.dfnPanel = dfnPanel;
+    return dfnPanel;
+}
+
+
+
+function hideAllDfnPanels() {
+    // Delete the currently-active dfn panel.
+    queryAll(".dfn-panel").forEach(dfnPanel=>hideDfnPanel({dfnPanel}));
+}
+
+function showDfnPanel(dfn) {
+    hideAllDfnPanels(); // Only display one at a time.
+
+    dfn.setAttribute("aria-expanded", "true");
+
+    const dfnPanel = genDfnPanel(dfn, dfn.panelData);
+
+    // Give the dfn a unique tabindex, and then
+    // give all the tabbable panel bits successive indexes.
+    let tabIndex = 100;
+    dfn.tabIndex = tabIndex++;
+    const tabbable = dfnPanel.querySelectorAll(":is(a, button)");
+    for (const el of tabbable) {
+        el.tabIndex = tabIndex++;
+    }
+
+    append(document.body, dfnPanel);
+    positionDfnPanel(dfnPanel);
+}
+
+function positionDfnPanel(dfnPanel) {
+    const dfn = dfnPanel.dfn;
+    const dfnPos = getBounds(dfn);
+    dfnPanel.style.top = dfnPos.bottom + "px";
+    dfnPanel.style.left = dfnPos.left + "px";
+
+    const panelPos = dfnPanel.getBoundingClientRect();
+    const panelMargin = 8;
+    const maxRight = document.body.parentNode.clientWidth - panelMargin;
+    if (panelPos.right > maxRight) {
+        const overflowAmount = panelPos.right - maxRight;
+        const newLeft = Math.max(panelMargin, dfnPos.left - overflowAmount);
+        dfnPanel.style.left = newLeft + "px";
+    }
+}
+
+function pinDfnPanel(dfnPanel) {
+    // Switch it to "activated" state, which pins it.
+    dfnPanel.classList.add("activated");
+    dfnPanel.style.position = "fixed";
+    dfnPanel.style.left = null;
+    dfnPanel.style.top = null;
+}
+
+function hideDfnPanel({dfn, dfnPanel}) {
+    if(!dfnPanel) dfnPanel = dfn.dfnPanel;
+    if(!dfn) dfn = dfnPanel.dfn;
+    dfn.dfnPanel = undefined;
+    dfnPanel.dfn = undefined;
+    dfn.setAttribute("aria-expanded", "false");
+    dfn.tabIndex = undefined;
+    dfnPanel.remove()
+}
+
+function toggleDfnPanel(dfn) {
+    if(dfn.dfnPanel) {
+        hideDfnPanel(dfn);
+    } else {
+        showDfnPanel(dfn);
+    }
+}
+
+function insertDfnPopupAction(dfn) {
+    dfn.setAttribute('role', 'button');
+    dfn.setAttribute('aria-expanded', 'false')
+    dfn.tabIndex = 0;
+    dfn.classList.add('has-dfn-panel');
+    dfn.addEventListener('click', (event) => {
+        toggleDfnPanel(dfn);
+        event.stopPropagation();
+    });
+    dfn.addEventListener('keypress', (event) => {
+        const kc = event.keyCode;
+        // 32->Space, 13->Enter
+        if(kc == 32 || kc == 13) {
+            toggleDfnPanel(dfn);
+            event.stopPropagation();
+            event.preventDefault();
+        }
+    });
+}
+
+function refocusOnTarget(event) {
+    const target = event.target;
+    setTimeout(() => {
+        // Refocus on the event.target element.
+        // This is needed after browser scrolls to the destination.
+        target.focus();
+    });
+}
+
+// TODO: shared util
+// Returns the root-level absolute position {left and top} of element.
+function getBounds(el, relativeTo=document.body) {
+    const relativeRect = relativeTo.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    const top = elRect.top - relativeRect.top;
+    const left = elRect.left - relativeRect.left;
+    return {
+        top,
+        left,
+        bottom: top + elRect.height,
+        right: left + elRect.width,
+    }
+}
+
+function scrollToTargetAndHighlight(event) {
+    let hash = event.target.hash;
+    if (hash) {
+        hash = decodeURIComponent(hash.substring(1));
+        const dest = document.getElementById(hash);
+        if (dest) {
+            dest.classList.add('highlighted');
+            setTimeout(() => dest.classList.remove('highlighted'), 1000);
+        }
+    }
+}
+
+// Functions, divided by link type, that wrap an autolink's
+// contents with the appropriate outer syntax.
+// Alternately, a string naming another type they format
+// the same as.
+function needsFor(type) {
+    switch(type) {
+        case "descriptor":
+        case "value":
+        case "element-attr":
+        case "attr-value":
+        case "element-state":
+        case "method":
+        case "constructor":
+        case "argument":
+        case "attribute":
+        case "const":
+        case "dict-member":
+        case "event":
+        case "enum-value":
+        case "stringifier":
+        case "serializer":
+        case "iterator":
+        case "maplike":
+        case "setlike":
+        case "state":
+        case "mode":
+        case "context":
+        case "facet": return true;
+
+        default: return false;
+    }
+}
+function refusesFor(type) {
+    switch(type) {
+        case "property":
+        case "element":
+        case "interface":
+        case "namespace":
+        case "callback":
+        case "dictionary":
+        case "enum":
+        case "exception":
+        case "typedef":
+        case "http-header":
+        case "permission": return true;
+
+        default: return false;
+    }
+}
+function linkFormatterFromType(type) {
+    switch(type) {
+        case 'scheme':
+        case 'permission':
+        case 'dfn': return (text) => `[=${text}=]`;
+
+        case 'abstract-op': return (text) => `[\$${text}\$]`;
+
+        case 'function':
+        case 'at-rule':
+        case 'selector':
+        case 'value': return (text) => `''${text}''`;
+
+        case 'http-header': return (text) => `[:${text}:]`;
+
+        case 'interface':
+        case 'constructor':
+        case 'method':
+        case 'argument':
+        case 'attribute':
+        case 'callback':
+        case 'dictionary':
+        case 'dict-member':
+        case 'enum':
+        case 'enum-value':
+        case 'exception':
+        case 'const':
+        case 'typedef':
+        case 'stringifier':
+        case 'serializer':
+        case 'iterator':
+        case 'maplike':
+        case 'setlike':
+        case 'extended-attribute':
+        case 'event':
+        case 'idl': return (text) => `{{${text}}}`;
+
+        case 'element-state':
+        case 'element-attr':
+        case 'attr-value':
+        case 'element': return (element) => `<{${element}}>`;
+
+        case 'grammar': return (text) => `${text} (within a <pre class=prod>)`;
+
+        case 'type': return (text)=> `<<${text}>>`;
+
+        case 'descriptor':
+        case 'property': return (text) => `'${text}'`;
+
+        default: return;
+    };
+};
+
+function genLinkingSyntaxes(dfn) {
+    if(dfn.tagName != "DFN") return;
+
+    const type = dfn.getAttribute('data-dfn-type');
+    if(!type) {
+        console.log(`<dfn> doesn't have a data-dfn-type:`, dfn);
+        return [];
+    }
+
+    // Return a function that wraps link text based on the type
+    const linkFormatter = linkFormatterFromType(type);
+    if(!linkFormatter) {
+        console.log(`<dfn> has an unknown data-dfn-type:`, dfn);
+        return [];
+    }
+
+    let ltAlts;
+    if(dfn.hasAttribute('data-lt')) {
+        ltAlts = dfn.getAttribute('data-lt')
+            .split("|")
+            .map(x=>x.trim());
+    } else {
+        ltAlts = [dfn.textContent.trim()];
+    }
+    if(type == "type") {
+        // lt of "<foo>", but "foo" is the interior;
+        // <<foo/bar>> is how you write it with a for,
+        // not <foo/<bar>> or whatever.
+        for(var i = 0; i < ltAlts.length; i++) {
+            const lt = ltAlts[i];
+            const match = /<(.*)>/.exec(lt);
+            if(match) { ltAlts[i] = match[1]; }
+        }
+    }
+
+    let forAlts;
+    if(dfn.hasAttribute('data-dfn-for')) {
+        forAlts = dfn.getAttribute('data-dfn-for')
+            .split(",")
+            .map(x=>x.trim());
+    } else {
+        forAlts = [''];
+    }
+
+    let linkingSyntaxes = [];
+    if(!needsFor(type)) {
+        for(const lt of ltAlts) {
+            linkingSyntaxes.push(linkFormatter(lt));
+        }
+    }
+    if(!refusesFor(type)) {
+        for(const f of forAlts) {
+            linkingSyntaxes.push(linkFormatter(`${f}/${ltAlts[0]}`))
+        }
+    }
+    return [
+        mk.b({}, 'Possible linking syntaxes:'),
+        mk.ul({},
+            ...linkingSyntaxes.map(link => {
+                const copyLink = async () =>
+                    await navigator.clipboard.writeText(link);
+                return mk.li({},
+                    mk.div({ class: 'link-item' },
+                        mk.button({
+                            class: 'copy-icon', title: 'Copy',
+                            type: 'button',
+                            _onclick: copyLink,
+                            tabindex: 0,
+                        }, mk.span({ class: 'icon' }) ),
+                        mk.span({}, link)
+                    )
+                );
+            })
+        )
+    ];
+}
+}
+</script>
+<script>/* Boilerplate: script-ref-hints */
+"use strict";
+{
+let refsData = {
+"#audiosession": {"export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"AudioSession","type":"interface","url":"#audiosession"},
+"#dom-audiosessionstate-active": {"export":true,"for_":["AudioSessionState"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"active\"","type":"enum-value","url":"#dom-audiosessionstate-active"},
+"#dom-audiosessionstate-inactive": {"export":true,"for_":["AudioSessionState"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"inactive\"","type":"enum-value","url":"#dom-audiosessionstate-inactive"},
+"#dom-audiosessionstate-interrupted": {"export":true,"for_":["AudioSessionState"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"interrupted\"","type":"enum-value","url":"#dom-audiosessionstate-interrupted"},
+"#dom-audiosessiontype-ambient": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"ambient\"","type":"enum-value","url":"#dom-audiosessiontype-ambient"},
+"#dom-audiosessiontype-auto": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"auto\"","type":"enum-value","url":"#dom-audiosessiontype-auto"},
+"#dom-audiosessiontype-play-and-record": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"play-and-record\"","type":"enum-value","url":"#dom-audiosessiontype-play-and-record"},
+"#dom-audiosessiontype-playback": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"playback\"","type":"enum-value","url":"#dom-audiosessiontype-playback"},
+"#dom-audiosessiontype-transient": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"transient\"","type":"enum-value","url":"#dom-audiosessiontype-transient"},
+"#dom-audiosessiontype-transient-solo": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"transient-solo\"","type":"enum-value","url":"#dom-audiosessiontype-transient-solo"},
+"#dom-navigator-audiosession": {"export":true,"for_":["Navigator"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"audioSession","type":"attribute","url":"#dom-navigator-audiosession"},
+"#enumdef-audiosessionstate": {"export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"AudioSessionState","type":"enum","url":"#enumdef-audiosessionstate"},
+"#enumdef-audiosessiontype": {"export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"AudioSessionType","type":"enum","url":"#enumdef-audiosessiontype"},
+"https://dom.spec.whatwg.org/#eventtarget": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"dom","spec":"dom","status":"current","text":"EventTarget","type":"interface","url":"https://dom.spec.whatwg.org/#eventtarget"},
+"https://html.spec.whatwg.org/multipage/system-state.html#navigator": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"Navigator","type":"interface","url":"https://html.spec.whatwg.org/multipage/system-state.html#navigator"},
+"https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"EventHandler","type":"typedef","url":"https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler"},
+"https://webidl.spec.whatwg.org/#Exposed": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"Exposed","type":"extended-attribute","url":"https://webidl.spec.whatwg.org/#Exposed"},
+};
+
+function mkRefHint(link, ref) {
+    const linkText = link.textContent;
+    let dfnTextElements = '';
+    if (ref.text != linkText) {
+        dfnTextElements =
+            mk.li({},
+                mk.b({}, "Term: "),
+                mk.span({}, ref.text)
+            );
+    }
+    const forList = ref.for_;
+    let forListElements;
+    if(forList.length == 0) {
+        forListElements = [];
+    } else if(forList.length == 1) {
+        forListElements = mk.li({},
+            mk.b({}, "For: "),
+            mk.span({}, forList[0]),
+        );
+    } else {
+        forListElements = mk.li({},
+            mk.b({}, "For: "),
+            mk.ul({},
+                ...forList.map(forItem =>
+                    mk.li({},
+                        mk.span({}, forItem)
+                    ),
+                ),
+            ),
+        );
+    }
+    const url = ref.url;
+    const safeUrl = encodeURIComponent(url);
+    const hintPanel = mk.aside({
+        class: "ref-hint",
+        id: `ref-hint-for-${safeUrl}`,
+        "data-for": url,
+        "aria-labelled-by": `ref-hint-for-${safeUrl}`,
+    },
+        mk.ul({},
+            dfnTextElements,
+            mk.li({},
+                mk.b({}, "URL: "),
+                mk.a({ href: url, class: "ref" }, url),
+            ),
+            mk.li({},
+                mk.b({}, "Type: "),
+                mk.span({}, `${ref.type}`),
+            ),
+            mk.li({},
+                mk.b({}, "Spec: "),
+                mk.span({}, `${ref.spec ? ref.spec : ''}`),
+            ),
+            forListElements
+        ),
+    );
+    hintPanel.forLink = link;
+    setupRefHintEventListeners(link, hintPanel);
+    return hintPanel;
+}
+
+function hideAllRefHints() {
+    queryAll(".ref-hint").forEach(el=>hideRefHint(el));
+}
+
+function hideRefHint(refHint) {
+    const link = refHint.forLink;
+    link.setAttribute("aria-expanded", "false");
+    if(refHint.teardownEventListeners) {
+        refHint.teardownEventListeners();
+    }
+    refHint.remove();
+}
+
+function showRefHint(link) {
+    if(link.classList.contains("dfn-link")) return;
+    const url = link.getAttribute("href");
+    const ref = refsData[url];
+    if(!ref) return;
+
+    hideAllRefHints(); // Only display one at this time.
+
+    const refHint = mkRefHint(link, ref);
+    append(document.body, refHint);
+    link.setAttribute("aria-expanded", "true");
+    positionRefHint(refHint);
+}
+
+function setupRefHintEventListeners(link, refHint) {
+    if (refHint.teardownEventListeners) return;
+    // Add event handlers to hide the refHint after the user moves away
+    // from both the link and refHint, if not hovering either within one second.
+    let timeout = null;
+    const startHidingRefHint = (event) => {
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+        timeout = setTimeout(() => {
+            hideRefHint(refHint);
+        }, 1000);
+    }
+    const resetHidingRefHint = (event) => {
+        if (timeout) clearTimeout(timeout);
+        timeout = null;
+    };
+    link.addEventListener("mouseleave", startHidingRefHint);
+    link.addEventListener("mouseenter", resetHidingRefHint);
+    link.addEventListener("blur", startHidingRefHint);
+    link.addEventListener("focus", resetHidingRefHint);
+    refHint.addEventListener("mouseleave", startHidingRefHint);
+    refHint.addEventListener("mouseenter", resetHidingRefHint);
+    refHint.addEventListener("blur", startHidingRefHint);
+    refHint.addEventListener("focus", resetHidingRefHint);
+
+    refHint.teardownEventListeners = () => {
+        // remove event listeners
+        resetHidingRefHint();
+        link.removeEventListener("mouseleave", startHidingRefHint);
+        link.removeEventListener("mouseenter", resetHidingRefHint);
+        link.removeEventListener("blur", startHidingRefHint);
+        link.removeEventListener("focus", resetHidingRefHint);
+        refHint.removeEventListener("mouseleave", startHidingRefHint);
+        refHint.removeEventListener("mouseenter", resetHidingRefHint);
+        refHint.removeEventListener("blur", startHidingRefHint);
+        refHint.removeEventListener("focus", resetHidingRefHint);
+    };
+}
+
+function positionRefHint(refHint) {
+    const link = refHint.forLink;
+    const linkPos = getBounds(link);
+    refHint.style.top = linkPos.bottom + "px";
+    refHint.style.left = linkPos.left + "px";
+
+    const panelPos = refHint.getBoundingClientRect();
+    const panelMargin = 8;
+    const maxRight = document.body.parentNode.clientWidth - panelMargin;
+    if (panelPos.right > maxRight) {
+        const overflowAmount = panelPos.right - maxRight;
+        const newLeft = Math.max(panelMargin, linkPos.left - overflowAmount);
+        refHint.style.left = newLeft + "px";
+    }
+}
+
+// TODO: shared util
+// Returns the root-level absolute position {left and top} of element.
+function getBounds(el, relativeTo=document.body) {
+    const relativeRect = relativeTo.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    const top = elRect.top - relativeRect.top;
+    const left = elRect.left - relativeRect.left;
+    return {
+        top,
+        left,
+        bottom: top + elRect.height,
+        right: left + elRect.width,
+    }
+}
+
+function showRefHintListener(e) {
+    // If the target isn't in a link (or is a link),
+    // just ignore it.
+    let link = e.target.closest("a");
+    if(!link) return;
+
+    // If the target is in a ref-hint panel
+    // (aka a link in the already-open one),
+    // also just ignore it.
+    if(link.closest(".ref-hint")) return;
+
+    // Otherwise, show the panel for the link.
+    showRefHint(link);
+}
+
+function hideAllHintsListener(e) {
+    // If the click is inside a ref-hint panel, ignore it.
+    if(e.target.closest(".ref-hint")) return;
+    // Otherwise, close all the current panels.
+    hideAllRefHints();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.body.addEventListener("mousedown", showRefHintListener);
+    document.body.addEventListener("focus", showRefHintListener);
+
+    document.body.addEventListener("click", hideAllHintsListener);
+});
+
+window.addEventListener("resize", () => {
+    // Hide any open ref hint.
+    hideAllRefHints();
+});
 }
 </script>
