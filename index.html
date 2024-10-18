@@ -7,7 +7,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
   <meta content="Bikeshed version 3febb7930, updated Tue Oct 15 11:33:47 2024 -0700" name="generator">
   <link href="https://w3c.github.io/audio-session/" rel="canonical">
-  <meta content="9ef2bd30c5cc718258a0b4d0b4bc465448771233" name="revision">
+  <meta content="66d2ba3293490a0bda30cc3c15997e97f8131307" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -695,7 +695,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Audio Session</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2024-10-16">16 October 2024</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2024-10-18">18 October 2024</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -736,22 +736,23 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
    <ol class="toc" role="directory">
     <li><a href="#introduction"><span class="secno">1</span> <span class="content">Introduction</span></a>
+    <li><a href="#concepts"><span class="secno">2</span> <span class="content">Concepts</span></a>
     <li>
-     <a href="#audiosession-interface"><span class="secno">2</span> <span class="content">The <code class="idl"><span>AudioSession</span></code> interface</span></a>
+     <a href="#audiosession-interface"><span class="secno">3</span> <span class="content">The <code class="idl"><span>AudioSession</span></code> interface</span></a>
      <ol class="toc">
-      <li><a href="#audio-session-types"><span class="secno">2.1</span> <span class="content">Audio session states</span></a>
-      <li><a href="#audio-session-states"><span class="secno">2.2</span> <span class="content">Audio session states</span></a>
+      <li><a href="#audio-session-types"><span class="secno">3.1</span> <span class="content">Audio session states</span></a>
+      <li><a href="#audio-session-states"><span class="secno">3.2</span> <span class="content">Audio session states</span></a>
      </ol>
-    <li><a href="#extensions-to-navigator"><span class="secno">3</span> <span class="content">Extensions to the <code>Navigator</code> interface</span></a>
-    <li><a href="#privacy"><span class="secno">4</span> <span class="content">Privacy considerations</span></a>
-    <li><a href="#security"><span class="secno">5</span> <span class="content">Security considerations</span></a>
+    <li><a href="#extensions-to-navigator"><span class="secno">4</span> <span class="content">Extensions to the <code>Navigator</code> interface</span></a>
+    <li><a href="#privacy"><span class="secno">5</span> <span class="content">Privacy considerations</span></a>
+    <li><a href="#security"><span class="secno">6</span> <span class="content">Security considerations</span></a>
     <li>
-     <a href="#examples"><span class="secno">6</span> <span class="content">Examples</span></a>
+     <a href="#examples"><span class="secno">7</span> <span class="content">Examples</span></a>
      <ol class="toc">
-      <li><a href="#proactive-play-and-record-example"><span class="secno">6.1</span> <span class="content">A site sets its audio session type proactively to "play-and-record"</span></a>
-      <li><a href="#interrutpion-handling-example"><span class="secno">6.2</span> <span class="content">A site reacts upon interruption</span></a>
+      <li><a href="#proactive-play-and-record-example"><span class="secno">7.1</span> <span class="content">A site sets its audio session type proactively to "play-and-record"</span></a>
+      <li><a href="#interrutpion-handling-example"><span class="secno">7.2</span> <span class="content">A site reacts upon interruption</span></a>
      </ol>
-    <li><a href="#acknowledgements"><span class="secno">7</span> <span class="content">Acknowledgements</span></a>
+    <li><a href="#acknowledgements"><span class="secno">8</span> <span class="content">Acknowledgements</span></a>
     <li>
      <a href="#w3c-conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
      <ol class="toc">
@@ -774,17 +775,48 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   </nav>
   <main>
    <h2 class="heading settled" data-level="1" id="introduction"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#introduction"></a></h2>
-   <p>People consume a lot of media (audio/video) and the Web is one of the primary means of consuming this type of content.
-However, media on the web does not integrate well with the platform.
-The Audio Session API helps to close the gap with platforms that have audio session/audio focus such as Android and iOS.
-This API will help by improving the audio-mixing of websites with native apps, so they can play on top of each other, or play exclusively.</p>
-   <p>Additionally, on some platforms the user agent will automatically manage the audio session for the site
-based on whether media elements are playing or not and which APIs are used for playing audio.
-In some cases this may not match user expectations, this API provides overrides to authors.</p>
-   <h2 class="heading settled" data-level="2" id="audiosession-interface"><span class="secno">2. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#audiosession" id="ref-for-audiosession">AudioSession</a></code> interface</span><a class="self-link" href="#audiosession-interface"></a></h2>
-   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="audio-session">audio session</dfn> represents the playback of auditory media.
-An audio session can be of particular <a data-link-type="dfn" href="#audio-session-type" id="ref-for-audio-session-type">type</a> and in a given <a data-link-type="dfn" href="#audio-session-state" id="ref-for-audio-session-state">state</a>.</p>
-   <p>The <code class="idl"><a data-link-type="idl" href="#audiosession" id="ref-for-audiosession①">AudioSession</a></code> is the main interface for this API, which is accessed through the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/system-state.html#navigator" id="ref-for-navigator">Navigator</a></code> interface (see <a href="#extensions-to-navigator">§ 3 Extensions to the Navigator interface</a>).</p>
+   <p>People increasingly consume media (audio/video) through the Web,
+which has become a primary channel for accessing this type of content.
+However, media on the Web often lacks seamless integration with underlying platforms.
+The Audio Session API addresses this gap by enhancing media handling
+across platforms that support audio session management or similar audio focus features.
+This API improves how web-based audio interacts with other apps,
+allowing for better audio mixing or exclusive playback, depending on the context,
+to provide a more consistent and integrated media experience across devices.</p>
+   <p>Additionally, some platforms automatically manage a site’s audio session
+based on media playback and the APIs used to play audio.
+However, this behavior might not always align with user expectations.
+This API allows developers to override the default behavior and gain more control over an audio session.</p>
+   <h2 class="heading settled" data-level="2" id="concepts"><span class="secno">2. </span><span class="content">Concepts</span><a class="self-link" href="#concepts"></a></h2>
+   <p>A web page can do audio processing in various ways, combining different APIs like <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/media.html#htmlmediaelement" id="ref-for-htmlmediaelement">HTMLMediaElement</a></code> or <code class="idl"><a data-link-type="idl" href="https://webaudio.github.io/web-audio-api/#AudioContext" id="ref-for-AudioContext">AudioContext</a></code>.
+This audio processing has a start and a stop, which aggregates all the different audio APIs being used.
+An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="audio-session">audio session</dfn> represents this aggregated audio processing. It allows web pages to express the general nature
+of the audio processing done by the web page.</p>
+   <p>An <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session">audio session</a> can be of a particular <a data-link-type="dfn" href="#audio-session-type" id="ref-for-audio-session-type">type</a>, and be in a particular <a data-link-type="dfn" href="#audio-session-state" id="ref-for-audio-session-state">state</a>.
+An <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session①">audio session</a> manages the audio for a set of individual sources (microphone recording) and sinks (audio rendering), named audio session <dfn class="dfn-paneled" data-dfn-for="audio session" data-dfn-type="dfn" data-lt="element" data-noexport id="audio-session-element">elements</dfn>.</p>
+   <p>An <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session②">audio session</a>'s <a data-link-type="dfn" href="#audio-session-element" id="ref-for-audio-session-element">element</a> has a number of properties:</p>
+   <ul>
+    <li data-md>
+     <p>A <dfn class="dfn-paneled" data-dfn-for="audio session" data-dfn-type="dfn" data-noexport id="audio-session-default-type">default type</dfn>, which is used to compute the <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session③">audio session</a> <a data-link-type="dfn" href="#audio-session-type" id="ref-for-audio-session-type①">type</a>, in case of "<code class="idl"><a data-link-type="idl" href="#dom-audiosessiontype-auto" id="ref-for-dom-audiosessiontype-auto">auto</a></code>".</p>
+    <li data-md>
+     <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="audible-flag">audible flag</dfn>, which is either <code>true</code> if the element is playing/recording audio, or <code>false</code> otherwise.</p>
+   </ul>
+   <p>An audio session <a data-link-type="dfn" href="#audio-session-element" id="ref-for-audio-session-element①">element</a> is an <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="audible-element">audible element</dfn> if its <a data-link-type="dfn" href="#audible-flag" id="ref-for-audible-flag">audible flag</a> is <code>true</code>.</p>
+   <p>Additionaly, an audio session <a data-link-type="dfn" href="#audio-session-element" id="ref-for-audio-session-element②">element</a> has associated steps for dealing with various state changes. By default, each of these steps is empty list of steps:</p>
+   <ul>
+    <li data-md>
+     <p><dfn class="dfn-paneled" data-dfn-for="audio session" data-dfn-type="dfn" data-lt="element update steps" data-noexport id="audio-session-element-update-steps">Element update steps</dfn>, which are run whenever the audio session state changes.</p>
+    <li data-md>
+     <p><dfn class="dfn-paneled" data-dfn-for="audio session" data-dfn-type="dfn" data-lt="element suspend steps" data-noexport id="audio-session-element-suspend-steps">Element suspend steps</dfn>, which are run when the audio session state moves from <code class="idl"><a data-link-type="idl" href="#dom-audiosessionstate-active" id="ref-for-dom-audiosessionstate-active">active</a></code> to either <code class="idl"><a data-link-type="idl" href="#dom-audiosessionstate-interrupted" id="ref-for-dom-audiosessionstate-interrupted">interrupted</a></code> or <code class="idl"><a data-link-type="idl" href="#dom-audiosessionstate-inactive" id="ref-for-dom-audiosessionstate-inactive">inactive</a></code>.</p>
+    <li data-md>
+     <p><dfn class="dfn-paneled" data-dfn-for="audio session" data-dfn-type="dfn" data-lt="element resume steps" data-noexport id="audio-session-element-resume-steps">Element resume steps</dfn>, which are run when audio session state moves from <code class="idl"><a data-link-type="idl" href="#dom-audiosessionstate-interrupted" id="ref-for-dom-audiosessionstate-interrupted①">interrupted</a></code> to <code class="idl"><a data-link-type="idl" href="#dom-audiosessionstate-active" id="ref-for-dom-audiosessionstate-active①">active</a></code>.</p>
+   </ul>
+   <p>A <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a> has a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="selected-audio-session">selected audio session</dfn>. In case of a change to any <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session④">audio session</a>, the user agent will update which <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session⑤">audio session</a> becomes the <a data-link-type="dfn" href="#selected-audio-session" id="ref-for-selected-audio-session">selected audio session</a>.
+A <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a> is said to have <dfn class="dfn-paneled" data-dfn-for="top-level browsing context" data-dfn-type="dfn" data-noexport id="top-level-browsing-context-audio-focus">audio focus</dfn> if its <a data-link-type="dfn" href="#selected-audio-session" id="ref-for-selected-audio-session①">selected audio session</a> is not <code>null</code> and its state is <code class="idl"><a data-link-type="idl" href="#dom-audiosessionstate-active" id="ref-for-dom-audiosessionstate-active②">active</a></code>.</p>
+   <div class="note" role="note"> User agents can decide whether to allow several <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="ref-for-top-level-browsing-context②">top-level browsing context</a> to have <a data-link-type="dfn" href="#top-level-browsing-context-audio-focus" id="ref-for-top-level-browsing-context-audio-focus">audio focus</a>, or to enforce that only a single <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="ref-for-top-level-browsing-context③">top-level browsing context</a> has <a data-link-type="dfn" href="#top-level-browsing-context-audio-focus" id="ref-for-top-level-browsing-context-audio-focus①">audio focus</a> at any given time.</div>
+   <h2 class="heading settled" data-level="3" id="audiosession-interface"><span class="secno">3. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#audiosession" id="ref-for-audiosession">AudioSession</a></code> interface</span><a class="self-link" href="#audiosession-interface"></a></h2>
+   <p><code class="idl"><a data-link-type="idl" href="#audiosession" id="ref-for-audiosession①">AudioSession</a></code> is the main interface for this API.
+It is accessed through the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/system-state.html#navigator" id="ref-for-navigator">Navigator</a></code> interface (see <a href="#extensions-to-navigator">§ 4 Extensions to the Navigator interface</a>).</p>
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed" id="ref-for-Exposed"><c- g>Exposed</c-></a>=<c- n>Window</c->]
 <c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="audiosession"><code><c- g>AudioSession</c-></code></dfn> : <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#eventtarget" id="ref-for-eventtarget"><c- n>EventTarget</c-></a> {
   <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-audiosessiontype" id="ref-for-enumdef-audiosessiontype"><c- n>AudioSessionType</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="AudioSession" data-dfn-type="attribute" data-export data-type="AudioSessionType" id="dom-audiosession-type"><code><c- g>type</c-></code></dfn>;
@@ -793,8 +825,8 @@ An audio session can be of particular <a data-link-type="dfn" href="#audio-sessi
   <c- b>attribute</c-> <a data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler"><c- n>EventHandler</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="AudioSession" data-dfn-type="attribute" data-export data-type="EventHandler" id="dom-audiosession-onstatechange"><code><c- g>onstatechange</c-></code></dfn>;
 };
 </pre>
-   <h3 class="heading settled" data-level="2.1" id="audio-session-types"><span class="secno">2.1. </span><span class="content">Audio session states</span><a class="self-link" href="#audio-session-types"></a></h3>
-   <p>By convention, there are several different <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session">audio session</a> <dfn class="dfn-paneled" data-dfn-for="audio session" data-dfn-type="dfn" data-lt="type" data-noexport id="audio-session-type">types</dfn> for different purposes.
+   <h3 class="heading settled" data-level="3.1" id="audio-session-types"><span class="secno">3.1. </span><span class="content">Audio session states</span><a class="self-link" href="#audio-session-types"></a></h3>
+   <p>By convention, there are several different <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session⑥">audio session</a> <dfn class="dfn-paneled" data-dfn-for="audio session" data-dfn-type="dfn" data-lt="type" data-noexport id="audio-session-type">types</dfn> for different purposes.
 In the API, these are represented by the <code class="idl"><a data-link-type="idl" href="#enumdef-audiosessiontype" id="ref-for-enumdef-audiosessiontype①">AudioSessionType</a></code> enum:</p>
    <dl>
     <dt><dfn class="dfn-paneled idl-code" data-dfn-for="AudioSessionType" data-dfn-type="enum-value" data-export data-lt="&quot;playback&quot;|playback" id="dom-audiosessiontype-playback"><code>playback</code></dfn>
@@ -811,7 +843,7 @@ In the API, these are represented by the <code class="idl"><a data-link-type="id
     <dd>Auto lets the User Agent choose the best audio session type according the use of audio by the web page. This is the type of the default <code class="idl"><a data-link-type="idl" href="#audiosession" id="ref-for-audiosession②">AudioSession</a></code>.
    </dl>
 <pre class="idl highlight def"><c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-audiosessiontype"><code><c- g>AudioSessionType</c-></code></dfn> {
-  <a class="idl-code" data-link-type="enum-value" href="#dom-audiosessiontype-auto" id="ref-for-dom-audiosessiontype-auto"><c- s>"auto"</c-></a>,
+  <a class="idl-code" data-link-type="enum-value" href="#dom-audiosessiontype-auto" id="ref-for-dom-audiosessiontype-auto①"><c- s>"auto"</c-></a>,
   <a class="idl-code" data-link-type="enum-value" href="#dom-audiosessiontype-playback" id="ref-for-dom-audiosessiontype-playback"><c- s>"playback"</c-></a>,
   <a class="idl-code" data-link-type="enum-value" href="#dom-audiosessiontype-transient" id="ref-for-dom-audiosessiontype-transient"><c- s>"transient"</c-></a>,
   <a class="idl-code" data-link-type="enum-value" href="#dom-audiosessiontype-transient-solo" id="ref-for-dom-audiosessiontype-transient-solo"><c- s>"transient-solo"</c-></a>,
@@ -819,36 +851,36 @@ In the API, these are represented by the <code class="idl"><a data-link-type="id
   <a class="idl-code" data-link-type="enum-value" href="#dom-audiosessiontype-play-and-record" id="ref-for-dom-audiosessiontype-play-and-record"><c- s>"play-and-record"</c-></a>
 };
 </pre>
-   <h3 class="heading settled" data-level="2.2" id="audio-session-states"><span class="secno">2.2. </span><span class="content">Audio session states</span><a class="self-link" href="#audio-session-states"></a></h3>
-   <p>An <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session①">audio session</a> can be in one of following <dfn class="dfn-paneled" data-dfn-for="audio session" data-dfn-type="dfn" data-noexport id="audio-session-state">state</dfn> , which are represented in the API by the <code class="idl"><a data-link-type="idl" href="#enumdef-audiosessionstate" id="ref-for-enumdef-audiosessionstate①">AudioSessionState</a></code> enum:</p>
+   <h3 class="heading settled" data-level="3.2" id="audio-session-states"><span class="secno">3.2. </span><span class="content">Audio session states</span><a class="self-link" href="#audio-session-states"></a></h3>
+   <p>An <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session⑦">audio session</a> can be in one of following <dfn class="dfn-paneled" data-dfn-for="audio session" data-dfn-type="dfn" data-noexport id="audio-session-state">state</dfn> , which are represented in the API by the <code class="idl"><a data-link-type="idl" href="#enumdef-audiosessionstate" id="ref-for-enumdef-audiosessionstate①">AudioSessionState</a></code> enum:</p>
    <dl>
     <dt><dfn class="dfn-paneled idl-code" data-dfn-for="AudioSessionState" data-dfn-type="enum-value" data-export data-lt="&quot;active&quot;|active" id="dom-audiosessionstate-active"><code>active</code></dfn>
-    <dd>the <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session②">audio session</a> is playing sound.
+    <dd>the <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session⑧">audio session</a> is playing sound.
     <dt><dfn class="dfn-paneled idl-code" data-dfn-for="AudioSessionState" data-dfn-type="enum-value" data-export data-lt="&quot;interrupted&quot;|interrupted" id="dom-audiosessionstate-interrupted"><code>interrupted</code></dfn>
-    <dd>the <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session③">audio session</a> is not playing sound, but can resume when it will get uninterrupted.
+    <dd>the <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session⑨">audio session</a> is not playing sound, but can resume when it will get uninterrupted.
     <dt><dfn class="dfn-paneled idl-code" data-dfn-for="AudioSessionState" data-dfn-type="enum-value" data-export data-lt="&quot;inactive&quot;|inactive" id="dom-audiosessionstate-inactive"><code>inactive</code></dfn>
-    <dd>the <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session④">audio session</a> is not playing sound.
+    <dd>the <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session①⓪">audio session</a> is not playing sound.
    </dl>
    <p>The page has a default audio session which is used by the user agent to automatically set up the audio session parameters.
 The UA will request and abandon audio focus when media elements start/finish playing on the page.
 This default audio session is represented as an <code class="idl"><a data-link-type="idl" href="#audiosession" id="ref-for-audiosession③">AudioSession</a></code> object that is exposed as <code class="idl"><a data-link-type="idl" href="#dom-navigator-audiosession" id="ref-for-dom-navigator-audiosession">navigator.audioSession</a></code>.</p>
 <pre class="idl highlight def"><c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-audiosessionstate"><code><c- g>AudioSessionState</c-></code></dfn> {
-  <a class="idl-code" data-link-type="enum-value" href="#dom-audiosessionstate-inactive" id="ref-for-dom-audiosessionstate-inactive"><c- s>"inactive"</c-></a>,
-  <a class="idl-code" data-link-type="enum-value" href="#dom-audiosessionstate-active" id="ref-for-dom-audiosessionstate-active"><c- s>"active"</c-></a>,
-  <a class="idl-code" data-link-type="enum-value" href="#dom-audiosessionstate-interrupted" id="ref-for-dom-audiosessionstate-interrupted"><c- s>"interrupted"</c-></a>
+  <a class="idl-code" data-link-type="enum-value" href="#dom-audiosessionstate-inactive" id="ref-for-dom-audiosessionstate-inactive①"><c- s>"inactive"</c-></a>,
+  <a class="idl-code" data-link-type="enum-value" href="#dom-audiosessionstate-active" id="ref-for-dom-audiosessionstate-active③"><c- s>"active"</c-></a>,
+  <a class="idl-code" data-link-type="enum-value" href="#dom-audiosessionstate-interrupted" id="ref-for-dom-audiosessionstate-interrupted②"><c- s>"interrupted"</c-></a>
 };
 </pre>
-   <h2 class="heading settled" data-level="3" id="extensions-to-navigator"><span class="secno">3. </span><span class="content">Extensions to the <code>Navigator</code> interface</span><a class="self-link" href="#extensions-to-navigator"></a></h2>
+   <h2 class="heading settled" data-level="4" id="extensions-to-navigator"><span class="secno">4. </span><span class="content">Extensions to the <code>Navigator</code> interface</span><a class="self-link" href="#extensions-to-navigator"></a></h2>
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed" id="ref-for-Exposed①"><c- g>Exposed</c-></a>=<c- n>Window</c->]
 <c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/system-state.html#navigator" id="ref-for-navigator①"><c- g>Navigator</c-></a> {
   // The default audio session that the user agent will use when media elements start/stop playing.
   <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#audiosession" id="ref-for-audiosession④"><c- n>AudioSession</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="Navigator" data-dfn-type="attribute" data-export data-readonly data-type="AudioSession" id="dom-navigator-audiosession"><code><c- g>audioSession</c-></code></dfn>;
 };
 </pre>
-   <h2 class="heading settled" data-level="4" id="privacy"><span class="secno">4. </span><span class="content">Privacy considerations</span><a class="self-link" href="#privacy"></a></h2>
-   <h2 class="heading settled" data-level="5" id="security"><span class="secno">5. </span><span class="content">Security considerations</span><a class="self-link" href="#security"></a></h2>
-   <h2 class="heading settled" data-level="6" id="examples"><span class="secno">6. </span><span class="content">Examples</span><a class="self-link" href="#examples"></a></h2>
-   <h3 class="heading settled" data-level="6.1" id="proactive-play-and-record-example"><span class="secno">6.1. </span><span class="content">A site sets its audio session type proactively to "play-and-record"</span><a class="self-link" href="#proactive-play-and-record-example"></a></h3>
+   <h2 class="heading settled" data-level="5" id="privacy"><span class="secno">5. </span><span class="content">Privacy considerations</span><a class="self-link" href="#privacy"></a></h2>
+   <h2 class="heading settled" data-level="6" id="security"><span class="secno">6. </span><span class="content">Security considerations</span><a class="self-link" href="#security"></a></h2>
+   <h2 class="heading settled" data-level="7" id="examples"><span class="secno">7. </span><span class="content">Examples</span><a class="self-link" href="#examples"></a></h2>
+   <h3 class="heading settled" data-level="7.1" id="proactive-play-and-record-example"><span class="secno">7.1. </span><span class="content">A site sets its audio session type proactively to "play-and-record"</span><a class="self-link" href="#proactive-play-and-record-example"></a></h3>
 <pre class="language-javascript highlight">navigator<c- p>.</c->audioSession<c- p>.</c->type <c- o>=</c-> <c- t>'play-and-record'</c-><c- p>;</c->
 <c- c1>// From now on, volume might be set based on 'play-and-record'.</c->
 <c- p>...</c->
@@ -862,7 +894,7 @@ navigator<c- p>.</c->mediaDevices
     localVideo<c- p>.</c->srcObject <c- o>=</c-> stream<c- p>;</c->
   <c- p>});</c->
 </pre>
-   <h3 class="heading settled" data-level="6.2" id="interrutpion-handling-example"><span class="secno">6.2. </span><span class="content">A site reacts upon interruption</span><a class="self-link" href="#interrutpion-handling-example"></a></h3>
+   <h3 class="heading settled" data-level="7.2" id="interrutpion-handling-example"><span class="secno">7.2. </span><span class="content">A site reacts upon interruption</span><a class="self-link" href="#interrutpion-handling-example"></a></h3>
 <pre class="language-javascript highlight">navigator<c- p>.</c->audioSession<c- p>.</c->type <c- o>=</c-> <c- u>"play-and-record"</c-><c- p>;</c->
 <c- c1>// From now on, volume might be set based on 'play-and-record'.</c->
 <c- p>...</c->
@@ -899,7 +931,7 @@ navigator<c- p>.</c->audioSession<c- p>.</c->onstatechange <c- o>=</c-> <c- k>as
   <c- p>}</c->
 <c- p>};</c->
 </pre>
-   <h2 class="heading settled" data-level="7" id="acknowledgements"><span class="secno">7. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
+   <h2 class="heading settled" data-level="8" id="acknowledgements"><span class="secno">8. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
    <p>The Working Group acknowledges the following people for their invaluable contributions to this specification:</p>
    <ul>
     <li data-md>
@@ -957,41 +989,50 @@ navigator<c- p>.</c->audioSession<c- p>.</c->onstatechange <c- o>=</c-> <c- k>as
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#dom-audiosessionstate-active">"active"</a><span>, in § 2.2</span>
-   <li><a href="#dom-audiosessionstate-active">active</a><span>, in § 2.2</span>
-   <li><a href="#dom-audiosessiontype-ambient">"ambient"</a><span>, in § 2.1</span>
-   <li><a href="#dom-audiosessiontype-ambient">ambient</a><span>, in § 2.1</span>
+   <li><a href="#dom-audiosessionstate-active">"active"</a><span>, in § 3.2</span>
+   <li><a href="#dom-audiosessionstate-active">active</a><span>, in § 3.2</span>
+   <li><a href="#dom-audiosessiontype-ambient">"ambient"</a><span>, in § 3.1</span>
+   <li><a href="#dom-audiosessiontype-ambient">ambient</a><span>, in § 3.1</span>
+   <li><a href="#audible-element">audible element</a><span>, in § 2</span>
+   <li><a href="#audible-flag">audible flag</a><span>, in § 2</span>
+   <li><a href="#top-level-browsing-context-audio-focus">audio focus</a><span>, in § 2</span>
    <li><a href="#audio-session">audio session</a><span>, in § 2</span>
-   <li><a href="#audiosession">AudioSession</a><span>, in § 2</span>
-   <li><a href="#dom-navigator-audiosession">audioSession</a><span>, in § 3</span>
-   <li><a href="#enumdef-audiosessionstate">AudioSessionState</a><span>, in § 2.2</span>
-   <li><a href="#enumdef-audiosessiontype">AudioSessionType</a><span>, in § 2.1</span>
-   <li><a href="#dom-audiosessiontype-auto">"auto"</a><span>, in § 2.1</span>
-   <li><a href="#dom-audiosessiontype-auto">auto</a><span>, in § 2.1</span>
-   <li><a href="#dom-audiosessionstate-inactive">"inactive"</a><span>, in § 2.2</span>
-   <li><a href="#dom-audiosessionstate-inactive">inactive</a><span>, in § 2.2</span>
-   <li><a href="#dom-audiosessionstate-interrupted">"interrupted"</a><span>, in § 2.2</span>
-   <li><a href="#dom-audiosessionstate-interrupted">interrupted</a><span>, in § 2.2</span>
-   <li><a href="#dom-audiosession-onstatechange">onstatechange</a><span>, in § 2</span>
-   <li><a href="#dom-audiosessiontype-play-and-record">"play-and-record"</a><span>, in § 2.1</span>
-   <li><a href="#dom-audiosessiontype-play-and-record">play-and-record</a><span>, in § 2.1</span>
-   <li><a href="#dom-audiosessiontype-playback">"playback"</a><span>, in § 2.1</span>
-   <li><a href="#dom-audiosessiontype-playback">playback</a><span>, in § 2.1</span>
+   <li><a href="#audiosession">AudioSession</a><span>, in § 3</span>
+   <li><a href="#dom-navigator-audiosession">audioSession</a><span>, in § 4</span>
+   <li><a href="#enumdef-audiosessionstate">AudioSessionState</a><span>, in § 3.2</span>
+   <li><a href="#enumdef-audiosessiontype">AudioSessionType</a><span>, in § 3.1</span>
+   <li><a href="#dom-audiosessiontype-auto">"auto"</a><span>, in § 3.1</span>
+   <li><a href="#dom-audiosessiontype-auto">auto</a><span>, in § 3.1</span>
+   <li><a href="#audio-session-default-type">default type</a><span>, in § 2</span>
+   <li><a href="#audio-session-element">element</a><span>, in § 2</span>
+   <li><a href="#audio-session-element-resume-steps">element resume steps</a><span>, in § 2</span>
+   <li><a href="#audio-session-element-suspend-steps">element suspend steps</a><span>, in § 2</span>
+   <li><a href="#audio-session-element-update-steps">element update steps</a><span>, in § 2</span>
+   <li><a href="#dom-audiosessionstate-inactive">"inactive"</a><span>, in § 3.2</span>
+   <li><a href="#dom-audiosessionstate-inactive">inactive</a><span>, in § 3.2</span>
+   <li><a href="#dom-audiosessionstate-interrupted">"interrupted"</a><span>, in § 3.2</span>
+   <li><a href="#dom-audiosessionstate-interrupted">interrupted</a><span>, in § 3.2</span>
+   <li><a href="#dom-audiosession-onstatechange">onstatechange</a><span>, in § 3</span>
+   <li><a href="#dom-audiosessiontype-play-and-record">"play-and-record"</a><span>, in § 3.1</span>
+   <li><a href="#dom-audiosessiontype-play-and-record">play-and-record</a><span>, in § 3.1</span>
+   <li><a href="#dom-audiosessiontype-playback">"playback"</a><span>, in § 3.1</span>
+   <li><a href="#dom-audiosessiontype-playback">playback</a><span>, in § 3.1</span>
+   <li><a href="#selected-audio-session">selected audio session</a><span>, in § 2</span>
    <li>
     state
     <ul>
-     <li><a href="#dom-audiosession-state">attribute for AudioSession</a><span>, in § 2</span>
-     <li><a href="#audio-session-state">dfn for audio session</a><span>, in § 2.2</span>
+     <li><a href="#dom-audiosession-state">attribute for AudioSession</a><span>, in § 3</span>
+     <li><a href="#audio-session-state">dfn for audio session</a><span>, in § 3.2</span>
     </ul>
-   <li><a href="#dom-audiosessiontype-transient">"transient"</a><span>, in § 2.1</span>
-   <li><a href="#dom-audiosessiontype-transient">transient</a><span>, in § 2.1</span>
-   <li><a href="#dom-audiosessiontype-transient-solo">"transient-solo"</a><span>, in § 2.1</span>
-   <li><a href="#dom-audiosessiontype-transient-solo">transient-solo</a><span>, in § 2.1</span>
+   <li><a href="#dom-audiosessiontype-transient">"transient"</a><span>, in § 3.1</span>
+   <li><a href="#dom-audiosessiontype-transient">transient</a><span>, in § 3.1</span>
+   <li><a href="#dom-audiosessiontype-transient-solo">"transient-solo"</a><span>, in § 3.1</span>
+   <li><a href="#dom-audiosessiontype-transient-solo">transient-solo</a><span>, in § 3.1</span>
    <li>
     type
     <ul>
-     <li><a href="#dom-audiosession-type">attribute for AudioSession</a><span>, in § 2</span>
-     <li><a href="#audio-session-type">dfn for audio session</a><span>, in § 2.1</span>
+     <li><a href="#dom-audiosession-type">attribute for AudioSession</a><span>, in § 3</span>
+     <li><a href="#audio-session-type">dfn for audio session</a><span>, in § 3.1</span>
     </ul>
   </ul>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
@@ -1005,7 +1046,14 @@ navigator<c- p>.</c->audioSession<c- p>.</c->onstatechange <c- o>=</c-> <c- k>as
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="f0951476">EventHandler</span>
+     <li><span class="dfn-paneled" id="1076ec40">HTMLMediaElement</span>
      <li><span class="dfn-paneled" id="be0c27b2">Navigator</span>
+     <li><span class="dfn-paneled" id="ae2a6342">top-level browsing context</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[WEBAUDIO]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="fabc7040">AudioContext</span>
     </ul>
    <li>
     <a data-link-type="biblio">[WEBIDL]</a> defines the following terms:
@@ -1022,6 +1070,8 @@ navigator<c- p>.</c->audioSession<c- p>.</c->onstatechange <c- o>=</c-> <c- k>as
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
+   <dt id="biblio-webaudio">[WEBAUDIO]
+   <dd>Paul Adenot; Hongchan Choi. <a href="https://webaudio.github.io/web-audio-api/"><cite>Web Audio API</cite></a>. URL: <a href="https://webaudio.github.io/web-audio-api/">https://webaudio.github.io/web-audio-api/</a>
    <dt id="biblio-webidl">[WEBIDL]
    <dd>Edgar Chen; Timothy Gu. <a href="https://webidl.spec.whatwg.org/"><cite>Web IDL Standard</cite></a>. Living Standard. URL: <a href="https://webidl.spec.whatwg.org/">https://webidl.spec.whatwg.org/</a>
   </dl>
@@ -1256,29 +1306,41 @@ function parseHTML(markup) {
 "use strict";
 {
 let dfnPanelData = {
-"2bc0cdf4": {"dfnID":"2bc0cdf4","dfnText":"EventTarget","external":true,"refSections":[{"refs":[{"id":"ref-for-eventtarget"}],"title":"2. The AudioSession interface"}],"url":"https://dom.spec.whatwg.org/#eventtarget"},
-"889e932f": {"dfnID":"889e932f","dfnText":"Exposed","external":true,"refSections":[{"refs":[{"id":"ref-for-Exposed"}],"title":"2. The AudioSession interface"},{"refs":[{"id":"ref-for-Exposed\u2460"}],"title":"3. Extensions to the Navigator interface"}],"url":"https://webidl.spec.whatwg.org/#Exposed"},
-"audio-session": {"dfnID":"audio-session","dfnText":"audio session","external":false,"refSections":[{"refs":[{"id":"ref-for-audio-session"}],"title":"2.1. Audio session states"},{"refs":[{"id":"ref-for-audio-session\u2460"},{"id":"ref-for-audio-session\u2461"},{"id":"ref-for-audio-session\u2462"},{"id":"ref-for-audio-session\u2463"}],"title":"2.2. Audio session states"}],"url":"#audio-session"},
-"audio-session-state": {"dfnID":"audio-session-state","dfnText":"state","external":false,"refSections":[{"refs":[{"id":"ref-for-audio-session-state"}],"title":"2. The AudioSession interface"}],"url":"#audio-session-state"},
-"audio-session-type": {"dfnID":"audio-session-type","dfnText":"types","external":false,"refSections":[{"refs":[{"id":"ref-for-audio-session-type"}],"title":"2. The AudioSession interface"}],"url":"#audio-session-type"},
-"audiosession": {"dfnID":"audiosession","dfnText":"AudioSession","external":false,"refSections":[{"refs":[{"id":"ref-for-audiosession"},{"id":"ref-for-audiosession\u2460"}],"title":"2. The AudioSession interface"},{"refs":[{"id":"ref-for-audiosession\u2461"}],"title":"2.1. Audio session states"},{"refs":[{"id":"ref-for-audiosession\u2462"}],"title":"2.2. Audio session states"},{"refs":[{"id":"ref-for-audiosession\u2463"}],"title":"3. Extensions to the Navigator interface"}],"url":"#audiosession"},
-"be0c27b2": {"dfnID":"be0c27b2","dfnText":"Navigator","external":true,"refSections":[{"refs":[{"id":"ref-for-navigator"}],"title":"2. The AudioSession interface"},{"refs":[{"id":"ref-for-navigator\u2460"}],"title":"3. Extensions to the Navigator interface"}],"url":"https://html.spec.whatwg.org/multipage/system-state.html#navigator"},
+"1076ec40": {"dfnID":"1076ec40","dfnText":"HTMLMediaElement","external":true,"refSections":[{"refs":[{"id":"ref-for-htmlmediaelement"}],"title":"2. Concepts"}],"url":"https://html.spec.whatwg.org/multipage/media.html#htmlmediaelement"},
+"2bc0cdf4": {"dfnID":"2bc0cdf4","dfnText":"EventTarget","external":true,"refSections":[{"refs":[{"id":"ref-for-eventtarget"}],"title":"3. The AudioSession interface"}],"url":"https://dom.spec.whatwg.org/#eventtarget"},
+"889e932f": {"dfnID":"889e932f","dfnText":"Exposed","external":true,"refSections":[{"refs":[{"id":"ref-for-Exposed"}],"title":"3. The AudioSession interface"},{"refs":[{"id":"ref-for-Exposed\u2460"}],"title":"4. Extensions to the Navigator interface"}],"url":"https://webidl.spec.whatwg.org/#Exposed"},
+"ae2a6342": {"dfnID":"ae2a6342","dfnText":"top-level browsing context","external":true,"refSections":[{"refs":[{"id":"ref-for-top-level-browsing-context"},{"id":"ref-for-top-level-browsing-context\u2460"},{"id":"ref-for-top-level-browsing-context\u2461"},{"id":"ref-for-top-level-browsing-context\u2462"}],"title":"2. Concepts"}],"url":"https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context"},
+"audible-element": {"dfnID":"audible-element","dfnText":"audible element","external":false,"refSections":[],"url":"#audible-element"},
+"audible-flag": {"dfnID":"audible-flag","dfnText":"audible flag","external":false,"refSections":[{"refs":[{"id":"ref-for-audible-flag"}],"title":"2. Concepts"}],"url":"#audible-flag"},
+"audio-session": {"dfnID":"audio-session","dfnText":"audio session","external":false,"refSections":[{"refs":[{"id":"ref-for-audio-session"},{"id":"ref-for-audio-session\u2460"},{"id":"ref-for-audio-session\u2461"},{"id":"ref-for-audio-session\u2462"},{"id":"ref-for-audio-session\u2463"},{"id":"ref-for-audio-session\u2464"}],"title":"2. Concepts"},{"refs":[{"id":"ref-for-audio-session\u2465"}],"title":"3.1. Audio session states"},{"refs":[{"id":"ref-for-audio-session\u2466"},{"id":"ref-for-audio-session\u2467"},{"id":"ref-for-audio-session\u2468"},{"id":"ref-for-audio-session\u2460\u24ea"}],"title":"3.2. Audio session states"}],"url":"#audio-session"},
+"audio-session-default-type": {"dfnID":"audio-session-default-type","dfnText":"default type","external":false,"refSections":[],"url":"#audio-session-default-type"},
+"audio-session-element": {"dfnID":"audio-session-element","dfnText":"elements","external":false,"refSections":[{"refs":[{"id":"ref-for-audio-session-element"},{"id":"ref-for-audio-session-element\u2460"},{"id":"ref-for-audio-session-element\u2461"}],"title":"2. Concepts"}],"url":"#audio-session-element"},
+"audio-session-element-resume-steps": {"dfnID":"audio-session-element-resume-steps","dfnText":"Element resume steps","external":false,"refSections":[],"url":"#audio-session-element-resume-steps"},
+"audio-session-element-suspend-steps": {"dfnID":"audio-session-element-suspend-steps","dfnText":"Element suspend steps","external":false,"refSections":[],"url":"#audio-session-element-suspend-steps"},
+"audio-session-element-update-steps": {"dfnID":"audio-session-element-update-steps","dfnText":"Element update steps","external":false,"refSections":[],"url":"#audio-session-element-update-steps"},
+"audio-session-state": {"dfnID":"audio-session-state","dfnText":"state","external":false,"refSections":[{"refs":[{"id":"ref-for-audio-session-state"}],"title":"2. Concepts"}],"url":"#audio-session-state"},
+"audio-session-type": {"dfnID":"audio-session-type","dfnText":"types","external":false,"refSections":[{"refs":[{"id":"ref-for-audio-session-type"},{"id":"ref-for-audio-session-type\u2460"}],"title":"2. Concepts"}],"url":"#audio-session-type"},
+"audiosession": {"dfnID":"audiosession","dfnText":"AudioSession","external":false,"refSections":[{"refs":[{"id":"ref-for-audiosession"},{"id":"ref-for-audiosession\u2460"}],"title":"3. The AudioSession interface"},{"refs":[{"id":"ref-for-audiosession\u2461"}],"title":"3.1. Audio session states"},{"refs":[{"id":"ref-for-audiosession\u2462"}],"title":"3.2. Audio session states"},{"refs":[{"id":"ref-for-audiosession\u2463"}],"title":"4. Extensions to the Navigator interface"}],"url":"#audiosession"},
+"be0c27b2": {"dfnID":"be0c27b2","dfnText":"Navigator","external":true,"refSections":[{"refs":[{"id":"ref-for-navigator"}],"title":"3. The AudioSession interface"},{"refs":[{"id":"ref-for-navigator\u2460"}],"title":"4. Extensions to the Navigator interface"}],"url":"https://html.spec.whatwg.org/multipage/system-state.html#navigator"},
 "dom-audiosession-onstatechange": {"dfnID":"dom-audiosession-onstatechange","dfnText":"onstatechange","external":false,"refSections":[],"url":"#dom-audiosession-onstatechange"},
 "dom-audiosession-state": {"dfnID":"dom-audiosession-state","dfnText":"state","external":false,"refSections":[],"url":"#dom-audiosession-state"},
 "dom-audiosession-type": {"dfnID":"dom-audiosession-type","dfnText":"type","external":false,"refSections":[],"url":"#dom-audiosession-type"},
-"dom-audiosessionstate-active": {"dfnID":"dom-audiosessionstate-active","dfnText":"active","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessionstate-active"}],"title":"2.2. Audio session states"}],"url":"#dom-audiosessionstate-active"},
-"dom-audiosessionstate-inactive": {"dfnID":"dom-audiosessionstate-inactive","dfnText":"inactive","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessionstate-inactive"}],"title":"2.2. Audio session states"}],"url":"#dom-audiosessionstate-inactive"},
-"dom-audiosessionstate-interrupted": {"dfnID":"dom-audiosessionstate-interrupted","dfnText":"interrupted","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessionstate-interrupted"}],"title":"2.2. Audio session states"}],"url":"#dom-audiosessionstate-interrupted"},
-"dom-audiosessiontype-ambient": {"dfnID":"dom-audiosessiontype-ambient","dfnText":"ambient","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-ambient"}],"title":"2.1. Audio session states"}],"url":"#dom-audiosessiontype-ambient"},
-"dom-audiosessiontype-auto": {"dfnID":"dom-audiosessiontype-auto","dfnText":"auto","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-auto"}],"title":"2.1. Audio session states"}],"url":"#dom-audiosessiontype-auto"},
-"dom-audiosessiontype-play-and-record": {"dfnID":"dom-audiosessiontype-play-and-record","dfnText":"play-and-record","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-play-and-record"}],"title":"2.1. Audio session states"}],"url":"#dom-audiosessiontype-play-and-record"},
-"dom-audiosessiontype-playback": {"dfnID":"dom-audiosessiontype-playback","dfnText":"playback","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-playback"}],"title":"2.1. Audio session states"}],"url":"#dom-audiosessiontype-playback"},
-"dom-audiosessiontype-transient": {"dfnID":"dom-audiosessiontype-transient","dfnText":"transient","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-transient"}],"title":"2.1. Audio session states"}],"url":"#dom-audiosessiontype-transient"},
-"dom-audiosessiontype-transient-solo": {"dfnID":"dom-audiosessiontype-transient-solo","dfnText":"transient-solo","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-transient-solo"}],"title":"2.1. Audio session states"}],"url":"#dom-audiosessiontype-transient-solo"},
-"dom-navigator-audiosession": {"dfnID":"dom-navigator-audiosession","dfnText":"audioSession","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-navigator-audiosession"}],"title":"2.2. Audio session states"}],"url":"#dom-navigator-audiosession"},
-"enumdef-audiosessionstate": {"dfnID":"enumdef-audiosessionstate","dfnText":"AudioSessionState","external":false,"refSections":[{"refs":[{"id":"ref-for-enumdef-audiosessionstate"}],"title":"2. The AudioSession interface"},{"refs":[{"id":"ref-for-enumdef-audiosessionstate\u2460"}],"title":"2.2. Audio session states"}],"url":"#enumdef-audiosessionstate"},
-"enumdef-audiosessiontype": {"dfnID":"enumdef-audiosessiontype","dfnText":"AudioSessionType","external":false,"refSections":[{"refs":[{"id":"ref-for-enumdef-audiosessiontype"}],"title":"2. The AudioSession interface"},{"refs":[{"id":"ref-for-enumdef-audiosessiontype\u2460"}],"title":"2.1. Audio session states"}],"url":"#enumdef-audiosessiontype"},
-"f0951476": {"dfnID":"f0951476","dfnText":"EventHandler","external":true,"refSections":[{"refs":[{"id":"ref-for-eventhandler"}],"title":"2. The AudioSession interface"}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler"},
+"dom-audiosessionstate-active": {"dfnID":"dom-audiosessionstate-active","dfnText":"active","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessionstate-active"},{"id":"ref-for-dom-audiosessionstate-active\u2460"},{"id":"ref-for-dom-audiosessionstate-active\u2461"}],"title":"2. Concepts"},{"refs":[{"id":"ref-for-dom-audiosessionstate-active\u2462"}],"title":"3.2. Audio session states"}],"url":"#dom-audiosessionstate-active"},
+"dom-audiosessionstate-inactive": {"dfnID":"dom-audiosessionstate-inactive","dfnText":"inactive","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessionstate-inactive"}],"title":"2. Concepts"},{"refs":[{"id":"ref-for-dom-audiosessionstate-inactive\u2460"}],"title":"3.2. Audio session states"}],"url":"#dom-audiosessionstate-inactive"},
+"dom-audiosessionstate-interrupted": {"dfnID":"dom-audiosessionstate-interrupted","dfnText":"interrupted","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessionstate-interrupted"},{"id":"ref-for-dom-audiosessionstate-interrupted\u2460"}],"title":"2. Concepts"},{"refs":[{"id":"ref-for-dom-audiosessionstate-interrupted\u2461"}],"title":"3.2. Audio session states"}],"url":"#dom-audiosessionstate-interrupted"},
+"dom-audiosessiontype-ambient": {"dfnID":"dom-audiosessiontype-ambient","dfnText":"ambient","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-ambient"}],"title":"3.1. Audio session states"}],"url":"#dom-audiosessiontype-ambient"},
+"dom-audiosessiontype-auto": {"dfnID":"dom-audiosessiontype-auto","dfnText":"auto","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-auto"}],"title":"2. Concepts"},{"refs":[{"id":"ref-for-dom-audiosessiontype-auto\u2460"}],"title":"3.1. Audio session states"}],"url":"#dom-audiosessiontype-auto"},
+"dom-audiosessiontype-play-and-record": {"dfnID":"dom-audiosessiontype-play-and-record","dfnText":"play-and-record","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-play-and-record"}],"title":"3.1. Audio session states"}],"url":"#dom-audiosessiontype-play-and-record"},
+"dom-audiosessiontype-playback": {"dfnID":"dom-audiosessiontype-playback","dfnText":"playback","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-playback"}],"title":"3.1. Audio session states"}],"url":"#dom-audiosessiontype-playback"},
+"dom-audiosessiontype-transient": {"dfnID":"dom-audiosessiontype-transient","dfnText":"transient","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-transient"}],"title":"3.1. Audio session states"}],"url":"#dom-audiosessiontype-transient"},
+"dom-audiosessiontype-transient-solo": {"dfnID":"dom-audiosessiontype-transient-solo","dfnText":"transient-solo","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-transient-solo"}],"title":"3.1. Audio session states"}],"url":"#dom-audiosessiontype-transient-solo"},
+"dom-navigator-audiosession": {"dfnID":"dom-navigator-audiosession","dfnText":"audioSession","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-navigator-audiosession"}],"title":"3.2. Audio session states"}],"url":"#dom-navigator-audiosession"},
+"enumdef-audiosessionstate": {"dfnID":"enumdef-audiosessionstate","dfnText":"AudioSessionState","external":false,"refSections":[{"refs":[{"id":"ref-for-enumdef-audiosessionstate"}],"title":"3. The AudioSession interface"},{"refs":[{"id":"ref-for-enumdef-audiosessionstate\u2460"}],"title":"3.2. Audio session states"}],"url":"#enumdef-audiosessionstate"},
+"enumdef-audiosessiontype": {"dfnID":"enumdef-audiosessiontype","dfnText":"AudioSessionType","external":false,"refSections":[{"refs":[{"id":"ref-for-enumdef-audiosessiontype"}],"title":"3. The AudioSession interface"},{"refs":[{"id":"ref-for-enumdef-audiosessiontype\u2460"}],"title":"3.1. Audio session states"}],"url":"#enumdef-audiosessiontype"},
+"f0951476": {"dfnID":"f0951476","dfnText":"EventHandler","external":true,"refSections":[{"refs":[{"id":"ref-for-eventhandler"}],"title":"3. The AudioSession interface"}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler"},
+"fabc7040": {"dfnID":"fabc7040","dfnText":"AudioContext","external":true,"refSections":[{"refs":[{"id":"ref-for-AudioContext"}],"title":"2. Concepts"}],"url":"https://webaudio.github.io/web-audio-api/#AudioContext"},
+"selected-audio-session": {"dfnID":"selected-audio-session","dfnText":"selected audio session","external":false,"refSections":[{"refs":[{"id":"ref-for-selected-audio-session"},{"id":"ref-for-selected-audio-session\u2460"}],"title":"2. Concepts"}],"url":"#selected-audio-session"},
+"top-level-browsing-context-audio-focus": {"dfnID":"top-level-browsing-context-audio-focus","dfnText":"audio focus","external":false,"refSections":[{"refs":[{"id":"ref-for-top-level-browsing-context-audio-focus"},{"id":"ref-for-top-level-browsing-context-audio-focus\u2460"}],"title":"2. Concepts"}],"url":"#top-level-browsing-context-audio-focus"},
 };
 
 document.addEventListener("DOMContentLoaded", ()=>{
@@ -1667,15 +1729,17 @@ function genLinkingSyntaxes(dfn) {
 "use strict";
 {
 let refsData = {
+"#audible-flag": {"export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"audible flag","type":"dfn","url":"#audible-flag"},
 "#audio-session": {"export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"audio session","type":"dfn","url":"#audio-session"},
+"#audio-session-element": {"export":true,"for_":["audio session"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"element","type":"dfn","url":"#audio-session-element"},
 "#audio-session-state": {"export":true,"for_":["audio session"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"state","type":"dfn","url":"#audio-session-state"},
 "#audio-session-type": {"export":true,"for_":["audio session"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"type","type":"dfn","url":"#audio-session-type"},
 "#audiosession": {"export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"AudioSession","type":"interface","url":"#audiosession"},
-"#dom-audiosessionstate-active": {"export":true,"for_":["AudioSessionState"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"active\"","type":"enum-value","url":"#dom-audiosessionstate-active"},
-"#dom-audiosessionstate-inactive": {"export":true,"for_":["AudioSessionState"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"inactive\"","type":"enum-value","url":"#dom-audiosessionstate-inactive"},
-"#dom-audiosessionstate-interrupted": {"export":true,"for_":["AudioSessionState"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"interrupted\"","type":"enum-value","url":"#dom-audiosessionstate-interrupted"},
+"#dom-audiosessionstate-active": {"export":true,"for_":["AudioSessionState"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"active","type":"enum-value","url":"#dom-audiosessionstate-active"},
+"#dom-audiosessionstate-inactive": {"export":true,"for_":["AudioSessionState"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"inactive","type":"enum-value","url":"#dom-audiosessionstate-inactive"},
+"#dom-audiosessionstate-interrupted": {"export":true,"for_":["AudioSessionState"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"interrupted","type":"enum-value","url":"#dom-audiosessionstate-interrupted"},
 "#dom-audiosessiontype-ambient": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"ambient\"","type":"enum-value","url":"#dom-audiosessiontype-ambient"},
-"#dom-audiosessiontype-auto": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"auto\"","type":"enum-value","url":"#dom-audiosessiontype-auto"},
+"#dom-audiosessiontype-auto": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"auto","type":"enum-value","url":"#dom-audiosessiontype-auto"},
 "#dom-audiosessiontype-play-and-record": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"play-and-record\"","type":"enum-value","url":"#dom-audiosessiontype-play-and-record"},
 "#dom-audiosessiontype-playback": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"playback\"","type":"enum-value","url":"#dom-audiosessiontype-playback"},
 "#dom-audiosessiontype-transient": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"transient\"","type":"enum-value","url":"#dom-audiosessiontype-transient"},
@@ -1683,9 +1747,14 @@ let refsData = {
 "#dom-navigator-audiosession": {"export":true,"for_":["Navigator"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"audioSession","type":"attribute","url":"#dom-navigator-audiosession"},
 "#enumdef-audiosessionstate": {"export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"AudioSessionState","type":"enum","url":"#enumdef-audiosessionstate"},
 "#enumdef-audiosessiontype": {"export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"AudioSessionType","type":"enum","url":"#enumdef-audiosessiontype"},
+"#selected-audio-session": {"export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"selected audio session","type":"dfn","url":"#selected-audio-session"},
+"#top-level-browsing-context-audio-focus": {"export":true,"for_":["top-level browsing context"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"audio focus","type":"dfn","url":"#top-level-browsing-context-audio-focus"},
 "https://dom.spec.whatwg.org/#eventtarget": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"dom","spec":"dom","status":"current","text":"EventTarget","type":"interface","url":"https://dom.spec.whatwg.org/#eventtarget"},
+"https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"top-level browsing context","type":"dfn","url":"https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context"},
+"https://html.spec.whatwg.org/multipage/media.html#htmlmediaelement": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"HTMLMediaElement","type":"interface","url":"https://html.spec.whatwg.org/multipage/media.html#htmlmediaelement"},
 "https://html.spec.whatwg.org/multipage/system-state.html#navigator": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"Navigator","type":"interface","url":"https://html.spec.whatwg.org/multipage/system-state.html#navigator"},
 "https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"EventHandler","type":"typedef","url":"https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler"},
+"https://webaudio.github.io/web-audio-api/#AudioContext": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"webaudio","spec":"webaudio","status":"current","text":"AudioContext","type":"interface","url":"https://webaudio.github.io/web-audio-api/#AudioContext"},
 "https://webidl.spec.whatwg.org/#Exposed": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"Exposed","type":"extended-attribute","url":"https://webidl.spec.whatwg.org/#Exposed"},
 };
 
