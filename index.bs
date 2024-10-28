@@ -133,7 +133,7 @@ In the API, these are represented by the {{AudioSessionType}} enum:
   };
 </pre>
 
-An {{AudioSessionType}} is an <dfn>exclusive type</dfn> if it is {{AudioSessionType/playback}} or {{AudioSessionType/play-and-record}}.
+An {{AudioSessionType}} is an <dfn>exclusive type</dfn> if it is {{AudioSessionType/playback}}, {{AudioSessionType/play-and-record}} or {{AudioSessionType/transient-solo}}.
 
 ## Audio session states ## {#audio-session-states}
 
