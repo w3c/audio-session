@@ -223,6 +223,9 @@ To <dfn>try activating</dfn> an {{AudioSession}} named |audioSession|, the user 
     1. [=Change the state=] of |audioSession|'s [=audio session=] to {{AudioSessionState/active}}. [=Change the state|Changing the state=] to {{AudioSessionState/active}} can fail, in which case the [=audio session=]'s [=audio session/state=] will either be {{AudioSessionState/inactive}} or {{AudioSessionState/interrupted}}.
     1. [=Queue a task=] to [=update the state=] of |audioSession| with its [=audio session=]'s [=audio session/state=].
 
+Activating an [=audio session=] can fail for various reasons.
+For instance, a web application may try to start playing some audio while a higher priviledge application, like a phone call application, is already playing audio.
+
 ## Update the selected audio session ## {#audio-session-update-selected-audio-session-algorithm}
 
 To <dfn>update the selected audio session</dfn> of a [=top-level browsing context=] named |context|, the user agent MUST run the following steps:
