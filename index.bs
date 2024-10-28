@@ -256,9 +256,9 @@ To <dfn>compute the audio session type</dfn> of |audioSession|, the user agent M
 1. If |audioSession|.[=AudioSession/[[type]]=] is not {{AudioSessionType/auto}}, return |audioSession|.[=AudioSession/[[type]]=].
 1. If any |element| of |audioSession|.[=AudioSession/[[elements]]=] has a [=default type=] of {{AudioSessionType/play-and-record}} and its [=element state|state=] is {{AudioSessionState/active}}, return {{AudioSessionType/play-and-record}}.
 1. If any |element| of |audioSession|.[=AudioSession/[[elements]]=] has a [=default type=] of {{AudioSessionType/playback}} and its [=element state|state=] is {{AudioSessionState/active}}, return {{AudioSessionType/playback}}.
+1. If any |element| of |audioSession|.[=AudioSession/[[elements]]=] has a [=default type=] of {{AudioSessionType/transient-solo}} and its [=element state|state=] is {{AudioSessionState/active}}, return {{AudioSessionType/transient-solo}}.
 1. If any |element| of |audioSession|.[=AudioSession/[[elements]]=] has a [=default type=] of {{AudioSessionType/transient}} and its [=element state|state=] is {{AudioSessionState/active}}, return {{AudioSessionType/transient}}.
-1. If any |element| of |audioSession|.[=AudioSession/[[elements]]=] has a [=default type=] of {{AudioSessionType/ambient}} and its [=element state|state=] is {{AudioSessionState/active}}, return {{AudioSessionType/ambient}}.
-1. Return {{AudioSessionType/auto}}.
+1. Return {{AudioSessionType/ambient}}.
 
 # Privacy considerations # {#privacy}
 
