@@ -198,7 +198,7 @@ Changing an [=audio session=]'s [=audio session/state=] to {{AudioSessionState/a
 * It can [=inactivate=] {{AudioSession}} objects of the [=top-level browsing context=], as defined in the algorithms below.
 * It can pause the audio of another tab or another application.
 
-Conversely, an [=audio session=] [=audio session/state=] can be modified outside of audio session [=audio session/element=] changes, for instance in case an active [=audio session=] is interrupted.
+Conversely, an [=audio session=] [=audio session/state=] can be modified outside of audio session [=audio session/element=] changes, for instance in case an active playback [=audio session=] is interrupted by an incoming phone call.
 When the user agent observes such a modification, the user agent MUST [=queue a task=] to [=update the state=] of |audioSession|, the {{AudioSession}} object [=tied to=] the modified [=audio session=] with |newState| being the new [=audio session=] [=audio session/state=].
 
 To <dfn>update the state</dfn> of |audioSession| with |newState|, the user agent MUST run the following steps:
