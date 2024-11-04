@@ -5,9 +5,9 @@
   <title>Audio Session</title>
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
-  <meta content="Bikeshed version 44fb9b41e, updated Mon Oct 21 15:57:35 2024 -0700" name="generator">
+  <meta content="Bikeshed version 9e4e5f0f6, updated Mon Oct 28 14:51:59 2024 -0700" name="generator">
   <link href="https://w3c.github.io/audio-session/" rel="canonical">
-  <meta content="f62ea81a18c589d8351b2a91cf2045f9ad920783" name="revision">
+  <meta content="a6ba03ae0e835a472b7355906bd29b94ce42d8c0" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -695,7 +695,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Audio Session</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2024-10-22">22 October 2024</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2024-11-04">4 November 2024</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -886,7 +886,7 @@ In the API, these are represented by the <code class="idl"><a data-link-type="id
   <a class="idl-code" data-link-type="enum-value" href="#dom-audiosessiontype-play-and-record" id="ref-for-dom-audiosessiontype-play-and-record"><c- s>"play-and-record"</c-></a>
 };
 </pre>
-   <p>An <code class="idl"><a data-link-type="idl" href="#enumdef-audiosessiontype" id="ref-for-enumdef-audiosessiontype②">AudioSessionType</a></code> is an <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="exclusive-type">exclusive type</dfn> if it is <code class="idl"><a data-link-type="idl" href="#dom-audiosessiontype-playback" id="ref-for-dom-audiosessiontype-playback①">playback</a></code> or <code class="idl"><a data-link-type="idl" href="#dom-audiosessiontype-play-and-record" id="ref-for-dom-audiosessiontype-play-and-record①">play-and-record</a></code>.</p>
+   <p>An <code class="idl"><a data-link-type="idl" href="#enumdef-audiosessiontype" id="ref-for-enumdef-audiosessiontype②">AudioSessionType</a></code> is an <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="exclusive-type">exclusive type</dfn> if it is <code class="idl"><a data-link-type="idl" href="#dom-audiosessiontype-playback" id="ref-for-dom-audiosessiontype-playback①">playback</a></code>, <code class="idl"><a data-link-type="idl" href="#dom-audiosessiontype-play-and-record" id="ref-for-dom-audiosessiontype-play-and-record①">play-and-record</a></code> or <code class="idl"><a data-link-type="idl" href="#dom-audiosessiontype-transient-solo" id="ref-for-dom-audiosessiontype-transient-solo①">transient-solo</a></code>.</p>
    <h3 class="heading settled" data-level="3.2" id="audio-session-states"><span class="secno">3.2. </span><span class="content">Audio session states</span><a class="self-link" href="#audio-session-states"></a></h3>
    <p>An <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session①⓪">audio session</a> can be in one of the following <dfn class="dfn-paneled" data-dfn-for="audio session" data-dfn-type="dfn" data-noexport id="audio-session-state">state</dfn> , which are represented in the API by the <code class="idl"><a data-link-type="idl" href="#enumdef-audiosessionstate" id="ref-for-enumdef-audiosessionstate①">AudioSessionState</a></code> enum:</p>
    <dl>
@@ -1393,7 +1393,7 @@ let dfnPanelData = {
 "dom-audiosessiontype-play-and-record": {"dfnID":"dom-audiosessiontype-play-and-record","dfnText":"play-and-record","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-play-and-record"},{"id":"ref-for-dom-audiosessiontype-play-and-record\u2460"}],"title":"3.1. Audio session types"}],"url":"#dom-audiosessiontype-play-and-record"},
 "dom-audiosessiontype-playback": {"dfnID":"dom-audiosessiontype-playback","dfnText":"playback","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-playback"},{"id":"ref-for-dom-audiosessiontype-playback\u2460"}],"title":"3.1. Audio session types"}],"url":"#dom-audiosessiontype-playback"},
 "dom-audiosessiontype-transient": {"dfnID":"dom-audiosessiontype-transient","dfnText":"transient","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-transient"}],"title":"3.1. Audio session types"}],"url":"#dom-audiosessiontype-transient"},
-"dom-audiosessiontype-transient-solo": {"dfnID":"dom-audiosessiontype-transient-solo","dfnText":"transient-solo","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-transient-solo"}],"title":"3.1. Audio session types"}],"url":"#dom-audiosessiontype-transient-solo"},
+"dom-audiosessiontype-transient-solo": {"dfnID":"dom-audiosessiontype-transient-solo","dfnText":"transient-solo","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-audiosessiontype-transient-solo"},{"id":"ref-for-dom-audiosessiontype-transient-solo\u2460"}],"title":"3.1. Audio session types"}],"url":"#dom-audiosessiontype-transient-solo"},
 "dom-navigator-audiosession": {"dfnID":"dom-navigator-audiosession","dfnText":"audioSession","external":false,"refSections":[],"url":"#dom-navigator-audiosession"},
 "enumdef-audiosessionstate": {"dfnID":"enumdef-audiosessionstate","dfnText":"AudioSessionState","external":false,"refSections":[{"refs":[{"id":"ref-for-enumdef-audiosessionstate"}],"title":"3. The AudioSession interface"},{"refs":[{"id":"ref-for-enumdef-audiosessionstate\u2460"}],"title":"3.2. Audio session states"}],"url":"#enumdef-audiosessionstate"},
 "enumdef-audiosessiontype": {"dfnID":"enumdef-audiosessiontype","dfnText":"AudioSessionType","external":false,"refSections":[{"refs":[{"id":"ref-for-enumdef-audiosessiontype"}],"title":"3. The AudioSession interface"},{"refs":[{"id":"ref-for-enumdef-audiosessiontype\u2460"},{"id":"ref-for-enumdef-audiosessiontype\u2461"}],"title":"3.1. Audio session types"}],"url":"#enumdef-audiosessiontype"},
