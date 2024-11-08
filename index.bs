@@ -6,6 +6,7 @@ Status: w3c/ED
 Group: mediawg
 Repository: w3c/audio-session
 URL: https://w3c.github.io/audio-session/
+TR: https://www.w3.org/TR/audio-session/
 Editor: Youenn Fablet, Apple https://www.apple.com/, youenn@apple.com, w3cid 96458
 Editor: Alastor Wu, Mozilla https://www.mozilla.org, alwu@mozilla.com, w3cid 92198
 Abstract: This API defines an API surface for controlling how audio is rendered and interacts with other audio playing applications.
