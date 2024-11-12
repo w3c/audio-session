@@ -56,6 +56,9 @@ Additionaly, an audio session [=audio session/element=] has associated steps for
 * <dfn data-lt="element suspend steps" for="audio session">Element suspend steps</dfn>, which are run when the audio session state moves from {{AudioSessionState/active}} to either {{AudioSessionState/interrupted}} or {{AudioSessionState/inactive}}.
 * <dfn data-lt="element resume steps" for="audio session">Element resume steps</dfn>, which are run when audio session state moves from {{AudioSessionState/interrupted}} to {{AudioSessionState/active}}.
 
+This specification is defining these steps, the [=default type=] and the [=audible flag=] for some [=audio session=]'s [=audio session/element|elements=] in section [[#integration]].
+Specifications defining other [=audio session/element|elements=] need to define these steps and properties.
+
 A [=top-level browsing context=] has a <dfn>selected audio session</dfn>. In case of a change to any [=audio session=], the user agent will update which [=audio session=] becomes the [=selected audio session=].
 A [=top-level browsing context=] is said to have <dfn lt="audio focus" for="top-level browsing context">audio focus</dfn> if its [=selected audio session=] is not `null` and its state is {{AudioSessionState/active}}.
 
@@ -273,6 +276,8 @@ To <dfn>compute the audio session type</dfn> of |audioSession|, the user agent M
 
 # Audio source and sink integration # {#integration}
 
+This section describes [=audio session=] [=audio session/element=]'s steps and properties for {{AudioContext}}, {{HTMLMediaElement}} and microphone {{MediaStreamTrack}}.
+
 An <dfn>element state</dfn> is:
 * {{AudioSessionState/interrupted}} if it is in its {{AudioSession}}'s [=AudioSession/[[interruptedElements]]=].
 * {{AudioSessionState/active}} if it is an [=audible element=].
@@ -317,10 +322,10 @@ A {{HTMLMediaElement}} is an [=audio session/element=] with the following proper
 * Its [=audible flag=] is `true` if it is playing, its volume is not <code>0</code>, it is not muted and it has audio tracks.
 * Its [=element suspend steps|suspend steps=] are:
     1. Let |mediaElement| be the {{HTMLMediaElement}} object.
-    1. [=Queue a task=] to run the internal play steps of |mediaElement|.
+    1. [=Queue a task=] to run the internal pause steps of |mediaElement|.
 * Its [=element resume steps|resume steps=] are:
     1. Let |mediaElement| be the {{HTMLMediaElement}} object.
-    1. [=Queue a task=] to run the internal pause steps of |mediaElement|.
+    1. [=Queue a task=] to run the internal play steps of |mediaElement|.
 
 When an {{HTMLMediaElement}}'s [=node document=] is changing, the user agent MUST run the following steps:
 1. Let |mediaElement| be the {{HTMLMediaElement}} whose [=node document=] is changing.
