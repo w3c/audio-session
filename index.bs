@@ -235,7 +235,7 @@ For instance, a web application may try to start playing some audio while a high
 ## Update the selected audio session ## {#audio-session-update-selected-audio-session-algorithm}
 
 To <dfn>update the selected audio session</dfn> of a [=top-level browsing context=] named |context|, the user agent MUST run the following steps:
-1. Let |activeAudioSessions| be the list of all the [=audio session|audio sessions=] [=tied to=] {{AudioSession}} objects of |context| and its children in a breadth-first order, that match both constraints:
+1. Let |activeAudioSessions| be the list of all the [=audio session|audio sessions=] [=tied to=] {{AudioSession}} objects of |context| and its children in a breadth-first order, that match both the following constraints:
     1. Its [=audio session/state=] is {{AudioSessionState/active}}.
     1. The result of [=compute the audio session type|computing the type=] of the {{AudioSession}} object is an [=exclusive type=].
 1. If |activeAudioSessions| is empty, abort these steps.
