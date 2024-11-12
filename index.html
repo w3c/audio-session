@@ -5,9 +5,9 @@
   <title>Audio Session</title>
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
-  <meta content="Bikeshed version 9e4e5f0f6, updated Mon Oct 28 14:51:59 2024 -0700" name="generator">
-  <link href="https://w3c.github.io/audio-session/" rel="canonical">
-  <meta content="a6ba03ae0e835a472b7355906bd29b94ce42d8c0" name="revision">
+  <meta content="Bikeshed version 742f3d674, updated Mon Nov 4 14:56:54 2024 -0800" name="generator">
+  <link href="https://www.w3.org/TR/audio-session/" rel="canonical">
+  <meta content="097c45103c3073d1f8c11a7f81e844dd762dc0e1" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -695,14 +695,16 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Audio Session</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2024-11-04">4 November 2024</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2024-11-12">12 November 2024</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
      <dl>
       <dt>This version:
       <dd><a class="u-url" href="https://w3c.github.io/audio-session/">https://w3c.github.io/audio-session/</a>
-      <dt>Issue Tracking:
+      <dt>Latest published version:
+      <dd><a href="https://www.w3.org/TR/audio-session/">https://www.w3.org/TR/audio-session/</a>
+      <dt>Feedback:
       <dd><a href="https://github.com/w3c/audio-session/issues/">GitHub</a>
       <dt class="editor">Editors:
       <dd class="editor p-author h-card vcard" data-editor-id="96458"><a class="p-name fn u-email email" href="mailto:youenn@apple.com">Youenn Fablet</a> (<a class="p-org org" href="https://www.apple.com/">Apple</a>)
@@ -716,7 +718,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   </div>
   <div class="p-summary" data-fill-with="abstract">
    <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
-   <p>This API defines an API surface for controlling how audio is rendered and interacts with other audio playing applications</p>
+   <p>This API defines an API surface for controlling how audio is rendered and interacts with other audio playing applications.</p>
   </div>
   <h2 class="no-num no-toc no-ref heading settled" id="sotd"><span class="content">Status of this document</span></h2>
   <div data-fill-with="status">
@@ -724,10 +726,10 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <p> Feedback and comments on this specification are welcome. <a href="https://github.com/w3c/audio-session/issues">GitHub Issues</a> are preferred for discussion on this specification. Alternatively, you can send comments to the Media Working Group’s mailing-list, <a href="mailto:public-media-wg@w3.org">public-media-wg@w3.org</a> (<a href="https://lists.w3.org/Archives/Public/public-media-wg/">archives</a>).
   This draft highlights some of the pending issues that are still to be discussed in the working group.
   No decision has been taken on the outcome of these issues including whether they are valid. </p>
-   <p> This document was published by the <a href="https://www.w3.org/groups/wg/media">Media Working Group</a> as an Editor’s Draft.
+   <p> This document was published by the <a href="https://www.w3.org/groups/wg/media/">Media Working Group</a> as an Editor’s Draft.
   This document is intended to become a <abbr title="World Wide Web Consortium">W3C</abbr> Recommendation. </p>
    <p> Publication as an Editor’s Draft does not imply endorsement by <abbr title="World Wide Web Consortium">W3C</abbr> and its Members. </p>
-   <p> This document was produced by a group operating under the <a class="css" data-link-type="property" href="https://www.w3.org/policies/patent-policy/" id="sotd_patent">W3C Patent Policy</a>. <abbr title="World Wide Web Consortium">W3C</abbr> maintains a <a href="https://www.w3.org/groups/wg/media/ipr" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/policies/patent-policy/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy/#sec-Disclosure">section 6 of the <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>. </p>
+   <p> This document was produced by a group operating under the <a class="css" data-link-type="property" href="https://www.w3.org/policies/patent-policy/" id="sotd_patent">W3C Patent Policy</a>. <abbr title="World Wide Web Consortium">W3C</abbr> maintains a <a href="https://www.w3.org/groups/wg/media/ipr" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/policies/patent-policy/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/policies/patent-policy/#sec-Disclosure">section 6 of the <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>. </p>
    <p> This document is governed by the <a href="https://www.w3.org/policies/process/20231103/" id="w3c_process_revision">03 November 2023 W3C Process Document</a>. </p>
    <p></p>
   </div>
@@ -1790,48 +1792,50 @@ function genLinkingSyntaxes(dfn) {
 "use strict";
 {
 let refsData = {
-"#associated-audiosession": {"export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"associated audiosession","type":"dfn","url":"#associated-audiosession"},
-"#audible-element": {"export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"audible element","type":"dfn","url":"#audible-element"},
-"#audible-flag": {"export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"audible flag","type":"dfn","url":"#audible-flag"},
-"#audio-session": {"export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"audio session","type":"dfn","url":"#audio-session"},
-"#audio-session-element": {"export":true,"for_":["audio session"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"element","type":"dfn","url":"#audio-session-element"},
-"#audio-session-state": {"export":true,"for_":["audio session"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"state","type":"dfn","url":"#audio-session-state"},
-"#audio-session-type": {"export":true,"for_":["audio session"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"type","type":"dfn","url":"#audio-session-type"},
-"#audiosession": {"export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"AudioSession","type":"interface","url":"#audiosession"},
-"#audiosession-state": {"export":true,"for_":["AudioSession"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"[[state]]","type":"dfn","url":"#audiosession-state"},
-"#audiosession-type": {"export":true,"for_":["AudioSession"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"[[type]]","type":"dfn","url":"#audiosession-type"},
-"#dom-audiosessionstate-active": {"export":true,"for_":["AudioSessionState"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"active","type":"enum-value","url":"#dom-audiosessionstate-active"},
-"#dom-audiosessionstate-inactive": {"export":true,"for_":["AudioSessionState"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"inactive","type":"enum-value","url":"#dom-audiosessionstate-inactive"},
-"#dom-audiosessionstate-interrupted": {"export":true,"for_":["AudioSessionState"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"interrupted","type":"enum-value","url":"#dom-audiosessionstate-interrupted"},
-"#dom-audiosessiontype-ambient": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"ambient\"","type":"enum-value","url":"#dom-audiosessiontype-ambient"},
-"#dom-audiosessiontype-auto": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"auto","type":"enum-value","url":"#dom-audiosessiontype-auto"},
-"#dom-audiosessiontype-play-and-record": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"play-and-record\"","type":"enum-value","url":"#dom-audiosessiontype-play-and-record"},
-"#dom-audiosessiontype-playback": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"playback\"","type":"enum-value","url":"#dom-audiosessiontype-playback"},
-"#dom-audiosessiontype-transient": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"transient\"","type":"enum-value","url":"#dom-audiosessiontype-transient"},
-"#dom-audiosessiontype-transient-solo": {"export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"transient-solo\"","type":"enum-value","url":"#dom-audiosessiontype-transient-solo"},
-"#enumdef-audiosessionstate": {"export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"AudioSessionState","type":"enum","url":"#enumdef-audiosessionstate"},
-"#enumdef-audiosessiontype": {"export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"AudioSessionType","type":"enum","url":"#enumdef-audiosessiontype"},
-"#selected-audio-session": {"export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"selected audio session","type":"dfn","url":"#selected-audio-session"},
-"#top-level-browsing-context-audio-focus": {"export":true,"for_":["top-level browsing context"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"audio focus","type":"dfn","url":"#top-level-browsing-context-audio-focus"},
-"https://dom.spec.whatwg.org/#eventtarget": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"dom","spec":"dom","status":"current","text":"EventTarget","type":"interface","url":"https://dom.spec.whatwg.org/#eventtarget"},
-"https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"top-level browsing context","type":"dfn","url":"https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context"},
-"https://html.spec.whatwg.org/multipage/media.html#htmlmediaelement": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"HTMLMediaElement","type":"interface","url":"https://html.spec.whatwg.org/multipage/media.html#htmlmediaelement"},
-"https://html.spec.whatwg.org/multipage/nav-history-apis.html#window": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"Window","type":"interface","url":"https://html.spec.whatwg.org/multipage/nav-history-apis.html#window"},
-"https://html.spec.whatwg.org/multipage/system-state.html#navigator": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"Navigator","type":"interface","url":"https://html.spec.whatwg.org/multipage/system-state.html#navigator"},
-"https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-realm": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"relevant realm","type":"dfn","url":"https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-realm"},
-"https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"EventHandler","type":"typedef","url":"https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler"},
-"https://webaudio.github.io/web-audio-api/#AudioContext": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"webaudio","spec":"webaudio","status":"current","text":"AudioContext","type":"interface","url":"https://webaudio.github.io/web-audio-api/#AudioContext"},
-"https://webidl.spec.whatwg.org/#Exposed": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"Exposed","type":"extended-attribute","url":"https://webidl.spec.whatwg.org/#Exposed"},
+"#associated-audiosession": {"displayText":"associated audiosession","export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"associated audiosession","type":"dfn","url":"#associated-audiosession"},
+"#audible-element": {"displayText":"audible element","export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"audible element","type":"dfn","url":"#audible-element"},
+"#audible-flag": {"displayText":"audible flag","export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"audible flag","type":"dfn","url":"#audible-flag"},
+"#audio-session": {"displayText":"audio session","export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"audio session","type":"dfn","url":"#audio-session"},
+"#audio-session-element": {"displayText":"element","export":true,"for_":["audio session"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"element","type":"dfn","url":"#audio-session-element"},
+"#audio-session-state": {"displayText":"state","export":true,"for_":["audio session"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"state","type":"dfn","url":"#audio-session-state"},
+"#audio-session-type": {"displayText":"type","export":true,"for_":["audio session"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"type","type":"dfn","url":"#audio-session-type"},
+"#audiosession": {"displayText":"AudioSession","export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"AudioSession","type":"interface","url":"#audiosession"},
+"#audiosession-state": {"displayText":"[[state]]","export":true,"for_":["AudioSession"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"[[state]]","type":"dfn","url":"#audiosession-state"},
+"#audiosession-type": {"displayText":"[[type]]","export":true,"for_":["AudioSession"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"[[type]]","type":"dfn","url":"#audiosession-type"},
+"#dom-audiosessionstate-active": {"displayText":"active","export":true,"for_":["AudioSessionState"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"active","type":"enum-value","url":"#dom-audiosessionstate-active"},
+"#dom-audiosessionstate-inactive": {"displayText":"inactive","export":true,"for_":["AudioSessionState"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"inactive","type":"enum-value","url":"#dom-audiosessionstate-inactive"},
+"#dom-audiosessionstate-interrupted": {"displayText":"interrupted","export":true,"for_":["AudioSessionState"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"interrupted","type":"enum-value","url":"#dom-audiosessionstate-interrupted"},
+"#dom-audiosessiontype-ambient": {"displayText":"\"ambient\"","export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"ambient\"","type":"enum-value","url":"#dom-audiosessiontype-ambient"},
+"#dom-audiosessiontype-auto": {"displayText":"auto","export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"auto","type":"enum-value","url":"#dom-audiosessiontype-auto"},
+"#dom-audiosessiontype-play-and-record": {"displayText":"\"play-and-record\"","export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"play-and-record\"","type":"enum-value","url":"#dom-audiosessiontype-play-and-record"},
+"#dom-audiosessiontype-playback": {"displayText":"\"playback\"","export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"playback\"","type":"enum-value","url":"#dom-audiosessiontype-playback"},
+"#dom-audiosessiontype-transient": {"displayText":"\"transient\"","export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"transient\"","type":"enum-value","url":"#dom-audiosessiontype-transient"},
+"#dom-audiosessiontype-transient-solo": {"displayText":"\"transient-solo\"","export":true,"for_":["AudioSessionType"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"\"transient-solo\"","type":"enum-value","url":"#dom-audiosessiontype-transient-solo"},
+"#enumdef-audiosessionstate": {"displayText":"AudioSessionState","export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"AudioSessionState","type":"enum","url":"#enumdef-audiosessionstate"},
+"#enumdef-audiosessiontype": {"displayText":"AudioSessionType","export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"AudioSessionType","type":"enum","url":"#enumdef-audiosessiontype"},
+"#selected-audio-session": {"displayText":"selected audio session","export":true,"for_":[],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"selected audio session","type":"dfn","url":"#selected-audio-session"},
+"#top-level-browsing-context-audio-focus": {"displayText":"audio focus","export":true,"for_":["top-level browsing context"],"level":"","normative":true,"shortname":"audio-session","spec":"audio-session","status":"local","text":"audio focus","type":"dfn","url":"#top-level-browsing-context-audio-focus"},
+"https://dom.spec.whatwg.org/#eventtarget": {"displayText":"EventTarget","export":true,"for_":[],"level":"1","normative":true,"shortname":"dom","spec":"dom","status":"current","text":"EventTarget","type":"interface","url":"https://dom.spec.whatwg.org/#eventtarget"},
+"https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context": {"displayText":"top-level browsing context","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"top-level browsing context","type":"dfn","url":"https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context"},
+"https://html.spec.whatwg.org/multipage/media.html#htmlmediaelement": {"displayText":"HTMLMediaElement","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"HTMLMediaElement","type":"interface","url":"https://html.spec.whatwg.org/multipage/media.html#htmlmediaelement"},
+"https://html.spec.whatwg.org/multipage/nav-history-apis.html#window": {"displayText":"Window","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"Window","type":"interface","url":"https://html.spec.whatwg.org/multipage/nav-history-apis.html#window"},
+"https://html.spec.whatwg.org/multipage/system-state.html#navigator": {"displayText":"Navigator","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"Navigator","type":"interface","url":"https://html.spec.whatwg.org/multipage/system-state.html#navigator"},
+"https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-realm": {"displayText":"relevant realm","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"relevant realm","type":"dfn","url":"https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-realm"},
+"https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler": {"displayText":"EventHandler","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"EventHandler","type":"typedef","url":"https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler"},
+"https://webaudio.github.io/web-audio-api/#AudioContext": {"displayText":"AudioContext","export":true,"for_":[],"level":"1","normative":true,"shortname":"webaudio","spec":"webaudio","status":"current","text":"AudioContext","type":"interface","url":"https://webaudio.github.io/web-audio-api/#AudioContext"},
+"https://webidl.spec.whatwg.org/#Exposed": {"displayText":"Exposed","export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"Exposed","type":"extended-attribute","url":"https://webidl.spec.whatwg.org/#Exposed"},
 };
 
 function mkRefHint(link, ref) {
     const linkText = link.textContent;
     let dfnTextElements = '';
-    if (ref.text != linkText) {
+    if (ref.displayText.toLowerCase() != linkText.toLowerCase()) {
+        // Give the original term if it's being displayed in a different way.
+        // But allow casing differences, they're insignificant.
         dfnTextElements =
             mk.li({},
                 mk.b({}, "Term: "),
-                mk.span({}, ref.text)
+                mk.span({}, ref.displayText)
             );
     }
     const forList = ref.for_;
