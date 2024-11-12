@@ -229,7 +229,7 @@ To <dfn>try activating</dfn> an {{AudioSession}} named |audioSession|, the user 
 
 <div class=example>
 Activating an [=audio session=] can fail for various reasons.
-For instance, a web application may try to start playing some audio while a higher priviledge application, like a phone call application, is already playing audio.
+For instance, a web application may try to start playing some audio while a higher privilege application, like a phone call application, is already playing audio.
 </div>
 
 ## Update the selected audio session ## {#audio-session-update-selected-audio-session-algorithm}
