@@ -7,7 +7,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
   <meta content="Bikeshed version 742f3d674, updated Mon Nov 4 14:56:54 2024 -0800" name="generator">
   <link href="https://www.w3.org/TR/audio-session/" rel="canonical">
-  <meta content="0b93b788cabc2f137df6b17c208e9b28c62836bc" name="revision">
+  <meta content="597275d24d595a1943e20043bfc5fab073b531cb" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -695,7 +695,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Audio Session</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2024-11-12">12 November 2024</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2024-11-13">13 November 2024</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -992,7 +992,7 @@ When the user agent observes such a modification, the user agent MUST <a data-li
       <li data-md>
        <p><a data-link-type="dfn" href="#set-the-state" id="ref-for-set-the-state">Set the state</a> of <var>audioSession</var>’s <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session②②">audio session</a> to <code class="idl"><a data-link-type="idl" href="#dom-audiosessionstate-inactive" id="ref-for-dom-audiosessionstate-inactive⑤">inactive</a></code>.</p>
       <li data-md>
-       <p>Assert that <var>audioSession</var>’s <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session②③">audio session</a>'s <a data-link-type="dfn" href="#audio-session-state" id="ref-for-audio-session-state⑥">state</a> is <code class="idl"><a data-link-type="idl" href="#dom-audiosessionstate-inactive" id="ref-for-dom-audiosessionstate-inactive⑥">inactive</a></code>.</p>
+       <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#assert" id="ref-for-assert">Assert</a>: <var>audioSession</var>’s <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session②③">audio session</a>'s <a data-link-type="dfn" href="#audio-session-state" id="ref-for-audio-session-state⑥">state</a> is <code class="idl"><a data-link-type="idl" href="#dom-audiosessionstate-inactive" id="ref-for-dom-audiosessionstate-inactive⑥">inactive</a></code>.</p>
       <li data-md>
        <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-queue-a-task②">Queue a task</a> to <a data-link-type="dfn" href="#notify-the-states-change" id="ref-for-notify-the-states-change②">notify the state’s change</a> with <var>audioSession</var> and with its <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session②④">audio session</a>'s <a data-link-type="dfn" href="#audio-session-state" id="ref-for-audio-session-state⑦">state</a>.</p>
      </ol>
@@ -1028,7 +1028,7 @@ For instance, a web application may try to start playing some audio while a high
     <li data-md>
      <p>If there is only one <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session③⓪">audio session</a> in <var>activeAudioSessions</var>, set the <a data-link-type="dfn" href="#selected-audio-session" id="ref-for-selected-audio-session②">selected audio session</a> to this <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session③①">audio session</a> and abort these steps.</p>
     <li data-md>
-     <p>Assert that for any <code class="idl"><a data-link-type="idl" href="#audiosession" id="ref-for-audiosession②⓪">AudioSession</a></code> object <a data-link-type="dfn" href="#audiosession-tied-to" id="ref-for-audiosession-tied-to②">tied to</a> an <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session③②">audio session</a> in <var>activeAudioSessions</var>’s named <var>audioSession</var>, <var>audioSession</var>.<a data-link-type="dfn" href="#audiosession-type" id="ref-for-audiosession-type⑤">[[type]]</a> is <code class="idl"><a data-link-type="idl" href="#dom-audiosessiontype-auto" id="ref-for-dom-audiosessiontype-auto⑤">auto</a></code>.</p>
+     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#assert" id="ref-for-assert①">Assert</a>: for any <code class="idl"><a data-link-type="idl" href="#audiosession" id="ref-for-audiosession②⓪">AudioSession</a></code> object <a data-link-type="dfn" href="#audiosession-tied-to" id="ref-for-audiosession-tied-to②">tied to</a> an <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session③②">audio session</a> in <var>activeAudioSessions</var>’s named <var>audioSession</var>, <var>audioSession</var>.<a data-link-type="dfn" href="#audiosession-type" id="ref-for-audiosession-type⑤">[[type]]</a> is <code class="idl"><a data-link-type="idl" href="#dom-audiosessiontype-auto" id="ref-for-dom-audiosessiontype-auto⑤">auto</a></code>.</p>
      <div class="note" role="note"> It is expected that only one <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session③③">audio session</a> with an explicit <a data-link-type="dfn" href="#exclusive-type" id="ref-for-exclusive-type②">exclusive type</a> can be active at any point in time.
 If there are multiple active <a data-link-type="dfn" href="#audio-session" id="ref-for-audio-session③④">audio sessions</a> in <var>activeAudioSessions</var>, their <a data-link-type="dfn" href="#audiosession-type" id="ref-for-audiosession-type⑥">[[type]]</a> can only be <code class="idl"><a data-link-type="idl" href="#dom-audiosessiontype-auto" id="ref-for-dom-audiosessiontype-auto⑥">auto</a></code>. </div>
     <li data-md>
@@ -1272,6 +1272,11 @@ navigator<c- p>.</c->audioSession<c- p>.</c->onstatechange <c- o>=</c-> <c- k>as
      <li><span class="dfn-paneled" id="ae2a6342">top-level browsing context</span>
     </ul>
    <li>
+    <a data-link-type="biblio">[INFRA]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="77b4c09a">assert</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[WEBAUDIO]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="fabc7040">AudioContext</span>
@@ -1289,6 +1294,8 @@ navigator<c- p>.</c->audioSession<c- p>.</c->onstatechange <c- o>=</c-> <c- k>as
    <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/"><cite>DOM Standard</cite></a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
    <dt id="biblio-html">[HTML]
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
+   <dt id="biblio-infra">[INFRA]
+   <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/"><cite>Infra Standard</cite></a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
    <dt id="biblio-webaudio">[WEBAUDIO]
@@ -1531,6 +1538,7 @@ let dfnPanelData = {
 "2bc0cdf4": {"dfnID":"2bc0cdf4","dfnText":"EventTarget","external":true,"refSections":[{"refs":[{"id":"ref-for-eventtarget"}],"title":"3. The AudioSession interface"}],"url":"https://dom.spec.whatwg.org/#eventtarget"},
 "5991ccfb": {"dfnID":"5991ccfb","dfnText":"relevant realm","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-relevant-realm"}],"title":"4. Extensions to the Navigator interface"}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-realm"},
 "5d7209e9": {"dfnID":"5d7209e9","dfnText":"Window","external":true,"refSections":[{"refs":[{"id":"ref-for-window"},{"id":"ref-for-window\u2460"},{"id":"ref-for-window\u2461"},{"id":"ref-for-window\u2462"}],"title":"4. Extensions to the Navigator interface"}],"url":"https://html.spec.whatwg.org/multipage/nav-history-apis.html#window"},
+"77b4c09a": {"dfnID":"77b4c09a","dfnText":"assert","external":true,"refSections":[{"refs":[{"id":"ref-for-assert"}],"title":"5.2. Update AudioSession\u2019s state"},{"refs":[{"id":"ref-for-assert\u2460"}],"title":"5.3. Update the selected audio session"}],"url":"https://infra.spec.whatwg.org/#assert"},
 "889e932f": {"dfnID":"889e932f","dfnText":"Exposed","external":true,"refSections":[{"refs":[{"id":"ref-for-Exposed"}],"title":"3. The AudioSession interface"},{"refs":[{"id":"ref-for-Exposed\u2460"}],"title":"4. Extensions to the Navigator interface"}],"url":"https://webidl.spec.whatwg.org/#Exposed"},
 "9a517a7d": {"dfnID":"9a517a7d","dfnText":"queue a task","external":true,"refSections":[{"refs":[{"id":"ref-for-queue-a-task"}],"title":"5.1. Update AudioSession\u2019s type"},{"refs":[{"id":"ref-for-queue-a-task\u2460"},{"id":"ref-for-queue-a-task\u2461"},{"id":"ref-for-queue-a-task\u2462"}],"title":"5.2. Update AudioSession\u2019s state"}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task"},
 "a72449dd": {"dfnID":"a72449dd","dfnText":"in parallel","external":true,"refSections":[{"refs":[{"id":"ref-for-in-parallel"}],"title":"5.1. Update AudioSession\u2019s type"},{"refs":[{"id":"ref-for-in-parallel\u2460"},{"id":"ref-for-in-parallel\u2461"}],"title":"5.2. Update AudioSession\u2019s state"}],"url":"https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel"},
@@ -2018,6 +2026,7 @@ let refsData = {
 "https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-realm": {"displayText":"relevant realm","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"relevant realm","type":"dfn","url":"https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-realm"},
 "https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler": {"displayText":"EventHandler","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"EventHandler","type":"typedef","url":"https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler"},
 "https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task": {"displayText":"queue a task","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"queue a task","type":"dfn","url":"https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task"},
+"https://infra.spec.whatwg.org/#assert": {"displayText":"assert","export":true,"for_":[],"level":"1","normative":true,"shortname":"infra","spec":"infra","status":"current","text":"assert","type":"dfn","url":"https://infra.spec.whatwg.org/#assert"},
 "https://webaudio.github.io/web-audio-api/#AudioContext": {"displayText":"AudioContext","export":true,"for_":[],"level":"1","normative":true,"shortname":"webaudio","spec":"webaudio","status":"current","text":"AudioContext","type":"interface","url":"https://webaudio.github.io/web-audio-api/#AudioContext"},
 "https://webidl.spec.whatwg.org/#Exposed": {"displayText":"Exposed","export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"Exposed","type":"extended-attribute","url":"https://webidl.spec.whatwg.org/#Exposed"},
 };
