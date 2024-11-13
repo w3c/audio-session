@@ -219,7 +219,7 @@ To <dfn>inactivate</dfn> an {{AudioSession}} named |audioSession|, the user agen
 1. If |audioSession|.[=AudioSession/[[state]]=] is {{AudioSessionState/inactive}}, abort these steps.
 1. Run the following steps [=in parallel=]:
     1. [=Set the state=] of |audioSession|'s [=audio session=] to {{AudioSessionState/inactive}}.
-    1. Assert that |audioSession|'s [=audio session=]'s [=audio session/state=] is {{AudioSessionState/inactive}}.
+    1. [=Assert=]: |audioSession|'s [=audio session=]'s [=audio session/state=] is {{AudioSessionState/inactive}}.
     1. [=Queue a task=] to [=notify the state's change=] with |audioSession| and with its [=audio session=]'s [=audio session/state=].
 
 To <dfn>try activating</dfn> an {{AudioSession}} named |audioSession|, the user agent MUST run the following steps:
@@ -241,7 +241,7 @@ To <dfn>update the selected audio session</dfn> of a [=top-level browsing contex
     1. The result of [=compute the audio session type|computing the type=] of the {{AudioSession}} object is an [=exclusive type=].
 1. If |activeAudioSessions| is empty, abort these steps.
 1. If there is only one [=audio session=] in |activeAudioSessions|, set the [=selected audio session=] to this [=audio session=] and abort these steps.
-1. Assert that for any {{AudioSession}} object [=tied to=] an [=audio session=] in |activeAudioSessions|'s named |audioSession|, |audioSession|.[=AudioSession/[[type]]=] is {{AudioSessionType/auto}}.
+1. [=Assert=]: for any {{AudioSession}} object [=tied to=] an [=audio session=] in |activeAudioSessions|'s named |audioSession|, |audioSession|.[=AudioSession/[[type]]=] is {{AudioSessionType/auto}}.
     <div class=note>
     It is expected that only one [=audio session=] with an explicit [=exclusive type=] can be active at any point in time.
     If there are multiple active [=audio session|audio sessions=] in |activeAudioSessions|, their [=AudioSession/[[type]]=] can only be {{AudioSessionType/auto}}. 
