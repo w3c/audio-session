@@ -56,6 +56,9 @@ Additionaly, an audio session [=audio session/element=] has associated steps for
 * <dfn data-lt="element suspend steps" for="audio session">Element suspend steps</dfn>, which are run when the audio session state moves from {{AudioSessionState/active}} to either {{AudioSessionState/interrupted}} or {{AudioSessionState/inactive}}.
 * <dfn data-lt="element resume steps" for="audio session">Element resume steps</dfn>, which are run when audio session state moves from {{AudioSessionState/interrupted}} to {{AudioSessionState/active}}.
 
+This specification is defining these steps, the [=default type=] and the [=audible flag=] for some [=audio session=]'s [=audio session/element|elements=] in section [[#integration]].
+Specifications defining other [=audio session/element|elements=] need to define these steps and properties.
+
 A [=top-level browsing context=] has a <dfn>selected audio session</dfn>. In case of a change to any [=audio session=], the user agent will update which [=audio session=] becomes the [=selected audio session=].
 A [=top-level browsing context=] is said to have <dfn lt="audio focus" for="top-level browsing context">audio focus</dfn> if its [=selected audio session=] is not `null` and its state is {{AudioSessionState/active}}.
 
@@ -270,6 +273,90 @@ To <dfn>compute the audio session type</dfn> of |audioSession|, the user agent M
 1. If any |element| of |audioSession|.[=AudioSession/[[elements]]=] has a [=default type=] of {{AudioSessionType/transient-solo}} and its [=element state|state=] is {{AudioSessionState/active}}, return {{AudioSessionType/transient-solo}}.
 1. If any |element| of |audioSession|.[=AudioSession/[[elements]]=] has a [=default type=] of {{AudioSessionType/transient}} and its [=element state|state=] is {{AudioSessionState/active}}, return {{AudioSessionType/transient}}.
 1. Return {{AudioSessionType/ambient}}.
+
+# Audio source and sink integration # {#integration}
+
+This section describes [=audio session=] [=audio session/element=]'s steps and properties for {{AudioContext}}, {{HTMLMediaElement}} and microphone {{MediaStreamTrack}}.
+
+An <dfn>element state</dfn> is:
+* {{AudioSessionState/interrupted}} if it is in its {{AudioSession}}'s [=AudioSession/[[interruptedElements]]=].
+* {{AudioSessionState/active}} if it is an [=audible element=].
+* {{AudioSessionState/inactive}} otherwise.
+
+To <dfn>update an element</dfn> named |element|, the user agent MUST run the following steps:
+1. Let |audioSession| be |element|'s {{AudioSession}}.
+1. Run |element|'s [=element update steps|update steps=].
+1. If |element| is an [=audible element=] and |audioSession|.[=AudioSession/[[state]]=] is {{AudioSessionState/interrupted}}, run the following steps:
+    1. Add |element| to |audioSession|.[=AudioSession/[[interruptedElements]]=].
+    1. Run |element|'s [=element suspend steps|suspend steps=].
+1. If |element| is in |audioSession|.[=AudioSession/[[interruptedElements]]=], and |audioSession|.[=AudioSession/[[state]]=] is {{AudioSessionState/active}}, run the following steps:
+    1. Remove |element| from |audioSession|.[=AudioSession/[[interruptedElements]]=].
+    1. Run |element|'s [=element resume steps|resume steps=].
+
+When the [=audible flag=] of one of |audioSession|'s [=audio session/elements=] is changing, the user agent MUST run the following steps:
+1. If the [=audible flag=] is changing to `true`, [=try activating=] |audioSession|.
+1. Otherwise, if any |element| of |audioSession|.[=AudioSession/[[elements]]=] has a [=element state|state=] of {{AudioSessionState/interrupted}}, abort these steps.
+1. Otherwise, [=inactivate=] |audioSession|.
+
+## AudioContext ## {#audiocontext-sink}
+
+An {{AudioContext}} is an [=audio session/element=] with the following properties:
+* Its [=default type=] is {{AudioSessionType/ambient}}.
+* Its [=audible flag=] is `true` if its state is {{AudioContextState/running}} and is sending non zero samples to its destination.
+* Its [=element suspend steps|suspend steps=] are:
+    1. Let |audioContext| be the {{AudioContext}} object.
+    1. Queue a control message to suspend |audioContext|.
+* Its [=element resume steps|resume steps=] are:
+    1. Let |audioContext| be the {{AudioContext}} object.
+    1. Queue a control message to unsuspend |audioContext|.
+
+When an {{AudioContext}} is created, the user agent MUST run the following steps:
+1. Let |audioContext| be the newly created {{AudioContext}}.
+1. Let |audioSession| be the {{AudioSession}}'s object of the {{Window}} object in which is created |audioContext|.
+1. Add |audioContext| to |audioSession|.[=AudioSession/[[elements]]=].
+
+## HTMLMediaElement ## {#media-element-sink}
+
+A {{HTMLMediaElement}} is an [=audio session/element=] with the following properties:
+* Its [=default type=] is {{AudioSessionType/playback}}.
+* Its [=audible flag=] is `true` if it is playing, its volume is not <code>0</code>, it is not muted and it has audio tracks.
+* Its [=element suspend steps|suspend steps=] are:
+    1. Let |mediaElement| be the {{HTMLMediaElement}} object.
+    1. [=Queue a task=] to run the internal pause steps of |mediaElement|.
+* Its [=element resume steps|resume steps=] are:
+    1. Let |mediaElement| be the {{HTMLMediaElement}} object.
+    1. [=Queue a task=] to run the internal play steps of |mediaElement|.
+
+When an {{HTMLMediaElement}}'s [=node document=] is changing, the user agent MUST run the following steps:
+1. Let |mediaElement| be the {{HTMLMediaElement}} whose [=node document=] is changing.
+1. Let |previousWindow| be the {{Window}} object associated to |mediaElement|'s previous [=node document=], if any or `null` otherwise.
+1. If |previousWindow| is not `null`, remove |mediaElement| from |previousWindow|'s [=associated AudioSession=].[=AudioSession/[[elements]]=].
+1. Let |newWindow| be the {{Window}} object associated to |mediaElement|'s new [=node document=], if any or `null` otherwise.
+1. If |newWindow| is not `null`, add |mediaElement| to |newWindow|'s [=associated AudioSession=].[=AudioSession/[[elements]]=].
+
+## Microphone MediaStreamtrack ## {#microphone-track-source}
+
+A microphone capture {{MediaStreamTrack}} is an [=audio session/element=] with the following properties:
+* Its [=default type=] is {{AudioSessionType/play-and-record}}.
+* Its [=audible flag=] is `true` if it is neither [=MediaStreamTrack/ended=] nor [=MediaStreamTrack/muted=].
+* Its [=element update steps=] are:
+    1. Let |track| be the {{MediaStreamTrack}} object.
+    1. Let |audioSession| be |track|'s {{AudioSession}}.
+    1. If |audioSession|.[=AudioSession/[[type]]=] is not {{AudioSessionType/play-and-record}} or  {{AudioSessionType/auto}}, [$MediaStreamTrack/track ended by the user agent|end$] |track|.
+* Its [=element suspend steps|suspend steps=] are:
+    1. Let |track| be the {{MediaStreamTrack}} object.
+    1. [=Queue a task=] to [$MediaStreamTrack/set a track's muted state|set the muted state$] of |track| to `true`.
+* Its [=element resume steps|resume steps=] are:
+    1. Let |track| be the {{MediaStreamTrack}} object.
+    1. [=Queue a task=] to [$MediaStreamTrack/set a track's muted state|set the muted state$] of |track| to `false`.
+
+When a microphone capture {{MediaStreamTrack}} is created, the user agent MUST run the following steps:
+1. Let |track| be the newly created {{MediaStreamTrack}}.
+1. Let |audioSession| be the {{AudioSession}}'s object of the {{Window}} object in which is created |track|.
+1. Add |track| to |audioSession|.[=AudioSession/[[elements]]=].
+
+FIXME: We should be hooking to the audio track's sources stored in the Window's mediaDevices's mediaStreamTrackSources, instead of MediaStreamTrack.
+This should handle the case of transferred's microphone tracks.
 
 # Privacy considerations # {#privacy}
 
