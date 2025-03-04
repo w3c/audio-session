@@ -305,10 +305,12 @@ An {{AudioContext}} is an [=audio session/element=] with the following propertie
 * Its [=audible flag=] is `true` if its state is {{AudioContextState/running}} and is sending non zero samples to its destination.
 * Its [=element suspend steps|suspend steps=] are:
     1. Let |audioContext| be the {{AudioContext}} object.
-    1. Queue a control message to interrupt |audioContext|.
+    1. <a>Queue a control message</a> to
+       {{AudioContext/interruption-start|interrupt}} |audioContext|.
 * Its [=element resume steps|resume steps=] are:
     1. Let |audioContext| be the {{AudioContext}} object.
-    1. Queue a control message to end the |audioContext|'s interruption.
+    1. <a>Queue a control message</a> to
+       {{AudioContext/interruption-end|end}} the |audioContext|'s interruption.
 
 When an {{AudioContext}} is created, the user agent MUST run the following steps:
 1. Let |audioContext| be the newly created {{AudioContext}}.
